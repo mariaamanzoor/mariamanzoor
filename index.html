@@ -3,216 +3,1204 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Maria Manzoor - Portfolio</title>
+  <title>Maria Manzoor - Software Engineer</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
+    * {
       margin: 0;
       padding: 0;
-      background-color: #111;
-      color: #eee;
-      line-height: 1.6;
+      box-sizing: border-box;
     }
 
-    header {
-      background: #000;
-      padding: 40px 20px;
-      border-bottom: 3px solid #FFD700;
-      text-align: center;
-    }
-
-    header h1 {
-      font-size: 3em;
-      color: #FFD700;
-      margin: 0;
-      font-weight: bold;
-    }
-
-    header p {
-      font-size: 1.2em;
-      font-style: italic;
-      color: #ccc;
-      margin-top: 10px;
-    }
-
-    .section {
-      padding: 60px 20px;
-      text-align: center;
-    }
-
-    .section h2 {
-      font-size: 1.8em;
-      font-weight: normal;
-      color: #FFD700;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .card {
-      background: #1c1c1c;
-      padding: 30px;
-      border-radius: 12px;
-      margin: 25px auto;
-      width: 85%;
-      max-width: 900px;
-      box-shadow: 0px 4px 12px rgba(0,0,0,0.6);
-      border: 0.5px solid #FFD700;
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #ffffff;
+      color: #1a1a1a;
       line-height: 1.8;
-      text-align: left;
+      overflow-x: hidden;
+    }
+
+    /* Animated Background */
+    .animated-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: #ffffff;
+    }
+
+    .animated-bg::before {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(255, 215, 0, 0.08) 0%, transparent 70%);
+      border-radius: 50%;
+      top: -300px;
+      right: -300px;
+      animation: float 20s ease-in-out infinite;
+    }
+
+    .animated-bg::after {
+      content: '';
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(255, 215, 0, 0.06) 0%, transparent 70%);
+      border-radius: 50%;
+      bottom: -250px;
+      left: -250px;
+      animation: float 15s ease-in-out infinite reverse;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      33% { transform: translate(50px, -50px) rotate(120deg); }
+      66% { transform: translate(-30px, 30px) rotate(240deg); }
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(20px);
+      padding: 20px 0;
+      z-index: 1000;
+      border-bottom: 3px solid #FFD700;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(255, 215, 0, 0.15);
+    }
+
+    nav.scrolled {
+      padding: 15px 0;
+      background: rgba(255, 255, 255, 1);
+      box-shadow: 0 8px 32px rgba(255, 215, 0, 0.2);
+    }
+
+    nav ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      flex-wrap: wrap;
+      gap: 40px;
+      padding: 0 20px;
+    }
+
+    nav a {
+      color: #1a1a1a;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      position: relative;
+      padding: 5px 0;
+      font-size: 0.95em;
+      letter-spacing: 0.5px;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: #FFD700;
+      transition: width 0.3s ease;
+      border-radius: 2px;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    nav a:hover {
+      color: #FFD700;
+      transform: translateY(-2px);
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 90px 20px 50px;
+      position: relative;
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 900px;
+      height: 900px;
+      background: radial-gradient(circle, rgba(255, 215, 0, 0.12) 0%, transparent 70%);
+      animation: pulse-glow 6s ease-in-out infinite;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { 
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.6;
+      }
+      50% { 
+        transform: translate(-50%, -50%) scale(1.3);
+        opacity: 1;
+      }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5em, 8vw, 5.5em);
+      font-weight: 900;
+      color: #FFD700;
+      margin-bottom: 15px;
+      animation: slideInUp 1s ease-out;
+      letter-spacing: -0.03em;
+      text-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+    }
+
+    @keyframes shimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero .tagline {
+      font-size: clamp(1.1em, 3vw, 1.5em);
+      color: #666;
+      margin-bottom: 20px;
+      animation: slideInUp 1s ease-out 0.2s backwards;
+      font-weight: 600;
+      font-style: italic;
+    }
+
+    .hero .description {
+      font-size: clamp(0.95em, 2.5vw, 1.1em);
+      color: #333;
+      max-width: 700px;
+      margin: 0 auto 30px;
+      animation: slideInUp 1s ease-out 0.4s backwards;
+      line-height: 1.8;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: slideInUp 1s ease-out 0.6s backwards;
+    }
+
+    .btn {
+      padding: 18px 45px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+      font-size: 1.05em;
+      letter-spacing: 0.5px;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .btn:hover::before {
+      width: 400px;
+      height: 400px;
+    }
+
+    .btn-primary {
+      background: #FFD700;
+      color: #000;
+      box-shadow: 0 10px 40px rgba(255, 215, 0, 0.4);
+      position: relative;
+      z-index: 1;
+      font-weight: 700;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 15px 60px rgba(255, 215, 0, 0.6);
+      background: #FFC700;
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      color: #FFD700;
+      border: 3px solid #FFD700;
+      backdrop-filter: blur(10px);
+      font-weight: 700;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 215, 0, 0.1);
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 10px 40px rgba(255, 215, 0, 0.3);
+      border-color: #FFD700;
+    }
+
+    /* Section Styles */
+    section {
+      padding: 60px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .section-title {
+      font-size: clamp(2.2em, 5vw, 3.5em);
+      text-align: center;
+      margin-bottom: 40px;
+      color: #FFD700;
+      position: relative;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      animation: fadeIn 1s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 120px;
+      height: 5px;
+      background: #FFD700;
+      margin: 15px auto 0;
+      border-radius: 3px;
+      animation: expandWidth 1s ease-out;
+      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+    }
+
+    @keyframes expandWidth {
+      from { width: 0; }
+      to { width: 120px; }
+    }
+
+    /* Cards */
+    .card {
+      background: #f9f9f9;
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 35px;
+      margin-bottom: 25px;
+      border: 2px solid #FFD700;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       opacity: 0;
-      transform: translateY(40px);
-      transition: all 0.8s ease-out;
+      transform: translateY(50px);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(255, 215, 0, 0.15);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+      transition: left 0.6s;
+    }
+
+    .card:hover::before {
+      left: 100%;
     }
 
     .card.show {
       opacity: 1;
       transform: translateY(0);
+      animation: cardSlideIn 0.6s ease-out;
     }
 
-    a {
+    @keyframes cardSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(50px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .card:hover {
+      transform: translateY(-12px) scale(1.02);
+      border-color: #FFD700;
+      box-shadow: 0 25px 70px rgba(255, 215, 0, 0.3);
+    }
+
+    .card h3 {
       color: #FFD700;
+      font-size: 1.7em;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-weight: 800;
+    }
+
+    .card h3 span {
+      font-size: 0.7em;
+      color: #666;
+      font-weight: 500;
+    }
+
+    .card p {
+      color: #333;
+      line-height: 1.9;
+      font-size: 1.05em;
+    }
+
+    .card ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .card li {
+      padding: 12px 0 12px 30px;
+      position: relative;
+      color: #333;
+      transition: all 0.3s ease;
+      font-size: 1.02em;
+    }
+
+    .card li:hover {
+      color: #000;
+      transform: translateX(8px);
+    }
+
+    .card li::before {
+      content: '✦';
+      position: absolute;
+      left: 0;
+      color: #FFD700;
+      font-size: 1.2em;
+      animation: sparkle 2s ease-in-out infinite;
+    }
+
+    @keyframes sparkle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.2); }
+    }
+
+    /* Project Grid */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
+    }
+
+    /* Skills Section */
+    .skills-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
+    }
+
+    .skill-category {
+      background: #f9f9f9;
+      backdrop-filter: blur(20px);
+      padding: 35px;
+      border-radius: 24px;
+      border: 2px solid #FFD700;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(255, 215, 0, 0.15);
+    }
+
+    .skill-category::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, rgba(255, 215, 0, 0.15), transparent);
+      border-radius: 50%;
+      transition: all 0.5s ease;
+    }
+
+    .skill-category:hover::after {
+      top: -25%;
+      right: -25%;
+      width: 300px;
+      height: 300px;
+    }
+
+    .skill-category:hover {
+      border-color: #FFD700;
+      transform: translateY(-12px) scale(1.05);
+      box-shadow: 0 25px 70px rgba(255, 215, 0, 0.3);
+    }
+
+    .skill-category h3 {
+      color: #FFD700;
+      margin-bottom: 20px;
+      font-size: 1.4em;
+      font-weight: 800;
+      position: relative;
+      z-index: 1;
+    }
+
+    .skill-tag {
+      display: inline-block;
+      background: #ffffff;
+      color: #333;
+      padding: 12px 20px;
+      border-radius: 12px;
+      margin: 6px;
+      font-size: 0.95em;
+      border: 2px solid #FFD700;
+      transition: all 0.3s ease;
+      font-weight: 700;
+      position: relative;
+      z-index: 1;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
+    }
+
+    .skill-tag:hover {
+      background: #FFD700;
+      color: #000;
+      transform: translateY(-5px) scale(1.1) rotate(2deg);
+      border-color: #FFD700;
+      box-shadow: 0 10px 30px rgba(255, 215, 0, 0.5);
+    }
+
+    /* Awards Grid */
+    .awards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
+    }
+
+    .award-card {
+      background: #f9f9f9;
+      backdrop-filter: blur(20px);
+      padding: 35px;
+      border-radius: 24px;
+      border: 2px solid #FFD700;
+      transition: all 0.4s ease;
+      opacity: 0;
+      transform: translateY(30px) scale(0.95);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(255, 215, 0, 0.15);
+    }
+
+    .award-card::before {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, transparent, rgba(255, 215, 0, 0.1));
+      transition: top 0.5s;
+    }
+
+    .award-card:hover::before {
+      top: 0;
+    }
+
+    .award-card.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      animation: bounceIn 0.6s ease-out;
+    }
+
+    @keyframes bounceIn {
+      0% { transform: scale(0.9); opacity: 0; }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .award-card:hover {
+      border-color: #FFD700;
+      transform: translateY(-12px) scale(1.05);
+      box-shadow: 0 25px 70px rgba(255, 215, 0, 0.4);
+    }
+
+    .award-icon {
+      font-size: 3.5em;
+      margin-bottom: 20px;
+      animation: float-icon 3s ease-in-out infinite;
+      display: inline-block;
+      filter: drop-shadow(0 4px 15px rgba(255, 215, 0, 0.4));
+    }
+
+    @keyframes float-icon {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    .award-card:hover .award-icon {
+      animation: spin-bounce 0.8s ease;
+    }
+
+    @keyframes spin-bounce {
+      0%, 100% { transform: rotate(0) scale(1); }
+      25% { transform: rotate(-10deg) scale(1.1); }
+      75% { transform: rotate(10deg) scale(1.1); }
+    }
+
+    .award-card h3 {
+      color: #FFD700;
+      font-size: 1.3em;
+      margin-bottom: 12px;
+      font-weight: 800;
+      position: relative;
+      z-index: 1;
+    }
+
+    .award-card .award-org {
+      color: #666;
+      font-size: 0.95em;
+      margin-bottom: 15px;
+      font-weight: 700;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Contact Section */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
+    }
+
+    .contact-item {
+      background: #f9f9f9;
+      backdrop-filter: blur(20px);
+      padding: 45px;
+      border-radius: 24px;
+      text-align: center;
+      border: 2px solid #FFD700;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(255, 215, 0, 0.15);
+    }
+
+    .contact-item::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 0;
+      background: linear-gradient(180deg, transparent, rgba(255, 215, 0, 0.15));
+      transition: height 0.4s ease;
+    }
+
+    .contact-item:hover::before {
+      height: 100%;
+    }
+
+    .contact-item:hover {
+      border-color: #FFD700;
+      transform: translateY(-12px) scale(1.05);
+      box-shadow: 0 25px 70px rgba(255, 215, 0, 0.4);
+    }
+
+    .contact-item svg {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 20px;
+      fill: #FFD700;
+      transition: all 0.4s ease;
+      position: relative;
+      z-index: 1;
+      filter: drop-shadow(0 4px 15px rgba(255, 215, 0, 0.3));
+    }
+
+    .contact-item:hover svg {
+      transform: scale(1.3) rotate(360deg);
+      fill: #FFC700;
+    }
+
+    .contact-item h3 {
+      color: #FFD700;
+      font-weight: 800;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 1;
+      font-size: 1.3em;
+    }
+
+    .contact-item a {
+      color: #333;
       text-decoration: none;
+      transition: color 0.3s ease;
+      position: relative;
+      z-index: 1;
+      font-weight: 600;
     }
 
-    a:hover {
-      text-decoration: underline;
+    .contact-item a:hover {
+      color: #FFD700;
     }
 
+    /* Footer */
     footer {
       text-align: center;
-      padding: 20px;
-      background: #000;
+      padding: 50px 20px;
+      background: #ffffff;
       border-top: 3px solid #FFD700;
-      margin-top: 40px;
-      font-size: 0.9em;
-      color: #ccc;
+      color: #666;
+      font-weight: 600;
+    }
+
+    /* Scroll to top button */
+    .scroll-top {
+      position: fixed;
+      bottom: 35px;
+      right: 35px;
+      width: 65px;
+      height: 65px;
+      background: #FFD700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: all 0.4s ease;
+      z-index: 999;
+      box-shadow: 0 10px 40px rgba(255, 215, 0, 0.5);
+      border: 3px solid #fff;
+    }
+
+    .scroll-top.show {
+      opacity: 1;
+      animation: bounceIn 0.5s ease;
+    }
+
+    .scroll-top:hover {
+      transform: translateY(-10px) scale(1.15) rotate(360deg);
+      box-shadow: 0 15px 60px rgba(255, 215, 0, 0.7);
+      background: #FFC700;
+    }
+
+    .scroll-top::before {
+      content: '↑';
+      color: #000;
+      font-size: 32px;
+      font-weight: bold;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #FFD700;
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-size: 0.85em;
+      font-weight: 800;
+      margin-left: 10px;
+      box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
+      animation: glow 2s ease-in-out infinite;
+      border: 2px solid #fff;
+    }
+
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5); }
+      50% { box-shadow: 0 6px 40px rgba(255, 215, 0, 0.9); }
+    }
+
+    /* Sparkle effect */
+    .sparkle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: #FFD700;
+      border-radius: 50%;
+      opacity: 0;
+      animation: sparkleFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes sparkleFloat {
+      0% {
+        transform: translateY(0) scale(0);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) scale(1);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      nav ul {
+        gap: 20px;
+        padding: 0 20px;
+      }
+      
+      section {
+        padding: 60px 20px;
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .btn {
+        width: 100%;
+        max-width: 300px;
+      }
+
+      .card h3 {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero h1 {
+        font-size: 2.5em;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="animated-bg"></div>
 
-  <!-- HEADER -->
-  <header>
-    <h1>Maria Manzoor</h1>
-    <p><em>Pushing the boundaries of innovation and technology</em></p>
-  </header>
+  <!-- Navigation -->
+  <nav id="navbar">
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#volunteer">Volunteer</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#awards">Awards</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
 
-  <!-- SUMMARY -->
-  <section id="summary" class="section">
-    <h2>Summary</h2>
-    <div class="card">
-      <p>Software Engineer with a strong academic and practical background in software engineering, AI, and web development. Experienced in research, teaching, and real-world projects, with expertise in AI/ML-driven code generation, software testing, and full-stack development. Passionate about applying AI to improve reliability, maintainability, and efficiency in modern software systems.</p>
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="hero-content">
+      <h1>Maria Manzoor</h1>
+      <p class="tagline">Software Engineer | AI/ML Researcher | Full-Stack Developer</p>
+      <p class="description">Passionate about leveraging AI to build reliable, efficient, and innovative software solutions. Specializing in AI-driven code generation, automated testing, and modern web development.</p>
+      <div class="cta-buttons">
+        <a href="#contact" class="btn btn-primary">Get In Touch</a>
+        <a href="#projects" class="btn btn-secondary">View My Work</a>
+      </div>
     </div>
   </section>
 
-  <!-- RESEARCH PROJECT -->
-  <section id="projects" class="section">
-    <h2>Research Project (MSc)</h2>
-    <div class="card">
-      <h3 style="color:#FFD700;">AI for Automated Code Generation & Software Testing</h3>
-      <p>Comparative study of AI code models — CodeGen, CodeT5, SantaCoder, and PolyCoder — evaluated with pass@k, execution time, robustness checks, maintainability, and automated linting/code-quality analysis. Built an evaluation pipeline to measure reliability and efficiency of model-generated code.</p>
-      
+  <!-- About Section -->
+  <section id="about">
+    <h2 class="section-title">About Me</h2>
+    <div class="card show">
+      <p>I'm a Software Engineer with a strong foundation in AI/ML, full-stack development, and software testing. Currently pursuing my MSc in Software Engineering at De Montfort University with First Class Honours, I focus on pushing the boundaries of what's possible with AI-driven development tools.</p>
+      <p style="margin-top: 20px;">My work bridges theoretical research and practical application, from evaluating AI code generation models to building responsive e-commerce platforms. I'm driven by the challenge of making software more reliable, maintainable, and efficient through innovative approaches.</p>
+    </div>
+
+    <div class="skills-container">
+      <div class="skill-category">
+        <h3>Technical Skills</h3>
+        <div>
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">React</span>
+          <span class="skill-tag">Node.js</span>
+          <span class="skill-tag">HTML/CSS</span>
+          <span class="skill-tag">SQL</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <h3>AI/ML</h3>
+        <div>
+          <span class="skill-tag">Machine Learning</span>
+          <span class="skill-tag">Code Generation</span>
+          <span class="skill-tag">Model Evaluation</span>
+          <span class="skill-tag">HumanEval</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <h3>Data & Business Analysis</h3>
+        <div>
+          <span class="skill-tag">Excel</span>
+          <span class="skill-tag">Power BI</span>
+          <span class="skill-tag">Tableau</span>
+          <span class="skill-tag">Requirements Analysis</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <h3>Tools & Platforms</h3>
+        <div>
+          <span class="skill-tag">Git</span>
+          <span class="skill-tag">GitHub</span>
+          <span class="skill-tag">VS Code</span>
+          <span class="skill-tag">Docker</span>
+          <span class="skill-tag">Linux</span>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- OTHER PROJECTS -->
-  <section id="other-projects" class="section">
-    <h2>Other Projects</h2>
+  <!-- Research Section -->
+  <section id="research">
+    <h2 class="section-title">Research</h2>
     <div class="card">
-      <h3>E-commerce Platform Development <span>(2020)</span></h3>
-      <p>Built an end-to-end platform with secure transactions and responsive UI.</p>
-    </div>
-    <div class="card">
-      <h3>Aaminah Selections Website <span>(2024)</span></h3>
-      <p>Designed and developed a responsive e-commerce website with integrated payments and modern UI.</p>
+      <h3>Benchmarking AI Models for Automated Code Generation and Testing using HumanEval</h3>
+      <p style="color: #666; margin-bottom: 15px; font-weight: 600;">MSc Research Project | Jul 2025 - Present | De Montfort University</p>
+      <p>Presenting a comprehensive evaluation of Large Language Models (LLMs) — including <strong>CodeT5, SantaCoder, CodeGen, and PolyCoder</strong> — in automated code generation tasks using the HumanEval benchmark.</p>
+      <p style="margin-top: 15px;">Beyond traditional correctness-based metrics, this study examines <strong>efficiency, maintainability, and governance</strong>, offering a holistic perspective on responsible and sustainable AI adoption in software engineering.</p>
+      <ul style="margin-top: 20px;">
+        <li>Comprehensive pass@k evaluation for code correctness across multiple models</li>
+        <li>Execution time and performance analysis for real-world deployment scenarios</li>
+        <li>Maintainability assessment using automated code quality metrics and linting tools</li>
+        <li>Governance framework evaluation for ethical AI implementation</li>
+        <li>Robustness testing under various input conditions and edge cases</li>
+      </ul>
+      <p style="margin-top: 20px;">The findings highlight that while models such as <strong>CodeT5</strong> demonstrate high accuracy, true reliability also depends on producing code that is <strong>efficient, readable, and ethically governed</strong>. This research advocates for <strong>multi-dimensional benchmarking frameworks</strong> to ensure AI-powered coding tools are both effective and trustworthy in professional practice.</p>
+      <p style="margin-top: 15px; color: #FFD700; font-weight: 700;"><strong>Award:</strong> The Best Postgraduate Project/Dissertation Prize in Computer Science (October 2025)</p>
     </div>
   </section>
 
-  <!-- EXPERIENCE -->
-  <section id="experience" class="section">
-    <h2>Professional Experience</h2>
+  <!-- Projects Section -->
+  <section id="projects">
+    <h2 class="section-title">Projects</h2>
+    <div class="projects-grid">
+      <div class="card">
+        <h3>Aaminah Selections <span>(2024)</span></h3>
+        <p>Modern e-commerce platform featuring responsive design, integrated payment processing, and intuitive user experience. Built with focus on performance optimization and user retention.</p>
+        <ul style="margin-top: 15px;">
+          <li>Secure payment gateway integration</li>
+          <li>Mobile-responsive design</li>
+          <li>SEO optimization</li>
+          <li>Performance monitoring</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>E-commerce Platform <span>(2020)</span></h3>
+        <p>End-to-end e-commerce solution with secure transaction processing and modern UI/UX. Implemented scalable architecture for handling high traffic volumes.</p>
+        <ul style="margin-top: 15px;">
+          <li>Full-stack development</li>
+          <li>Database optimization</li>
+          <li>User authentication</li>
+          <li>Admin dashboard</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
+  <!-- Experience Section -->
+  <section id="experience">
+    <h2 class="section-title">Professional Experience</h2>
+    
     <div class="card">
-      <h3>E-commerce Specialist — The Commerce People (Jhelum, Pakistan) <span>(2022–2024)</span></h3>
+      <h3>Web Developer <span>| Aaminah Selections (2024-Present)</span></h3>
       <ul>
-        <li>Managed product listings and optimized online store performance.</li>
-        <li>Implemented digital marketing strategies, including SEO, email campaigns, and social media.</li>
-        <li>Analyzed sales data and customer behavior to improve conversions.</li>
-        <li>Coordinated with supply chain teams to ensure timely product availability.</li>
-        <li>Provided customer support and resolved inquiries to maintain high satisfaction.</li>
+        <li>Design and develop responsive e-commerce website with integrated payment systems</li>
+        <li>Implement user feedback to enhance functionality and user experience</li>
+        <li>Optimize performance metrics leading to improved user retention</li>
+        <li>Maintain and update website features based on business requirements</li>
       </ul>
     </div>
 
     <div class="card">
-      <h3>Graduate Teaching Assistant — University of Gujrat, Pakistan <span>(2022–2024)</span></h3>
+      <h3>Graduate Teaching Assistant <span>| University of Gujrat (2022-2024)</span></h3>
       <ul>
-        <li>Delivered software development, algorithms, and debugging labs; mentored 50+ students per semester.</li>
-        <li>Improved assignment completion rates by 15% via tailored materials and coding workshops.</li>
+        <li>Delivered hands-on labs in software development, algorithms, and debugging for 50+ students per semester</li>
+        <li>Developed tailored learning materials and conducted coding workshops</li>
+        <li>Improved student assignment completion rates by 15% through mentorship</li>
+        <li>Provided one-on-one support for complex programming concepts</li>
       </ul>
     </div>
 
     <div class="card">
-      <h3>Web Developer — Aaminah Selections <span>(2024–Present)</span></h3>
+      <h3>E-commerce Specialist <span>| The Commerce People, Jhelum, Pakistan (2022-2024)</span></h3>
       <ul>
-        <li>Designed and developed a responsive e-commerce website with integrated payments.</li>
-        <li>Maintained and enhanced functionality based on feedback, improving user retention.</li>
+        <li>Managed product listings and optimized online store performance</li>
+        <li>Implemented digital marketing strategies including SEO and email campaigns</li>
+        <li>Analyzed sales data and customer behavior to drive conversion improvements</li>
+        <li>Coordinated with supply chain teams for inventory management</li>
+        <li>Maintained high customer satisfaction through responsive support</li>
       </ul>
     </div>
 
     <div class="card">
-      <h3>Open-Source Contributor — GitHub Projects <span>(2020–2021)</span></h3>
+      <h3>Open-Source Contributor <span>| GitHub Projects (2020-2021)</span></h3>
       <ul>
-        <li>Contributed bug fixes, optimizations, and documentation to AI/ML & software repos.</li>
-        <li>Enhanced usability and reduced reported issues by ~20% across contributed projects.</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- EDUCATION -->
-  <section id="education" class="section">
-    <h2>Education</h2>
-    <div class="card">
-      <ul>
-        <li><strong>MSc Software Engineering</strong> — De Montfort University, UK <span>(2024–Present)</span></li>
-        <li><strong>BSc Information Technology</strong> — University of Gujrat, Pakistan <span>(2016–2020)</span></li>
+        <li>Contributed bug fixes and optimizations to AI/ML and software repositories</li>
+        <li>Enhanced documentation for improved developer experience</li>
+        <li>Reduced reported issues by approximately 20% in contributed projects</li>
+        <li>Collaborated with international development teams</li>
       </ul>
     </div>
   </section>
 
-  <!-- ACHIEVEMENTS -->
-  <section id="achievements" class="section">
-    <h2>Achievements</h2>
+  <!-- Volunteer Section -->
+  <section id="volunteer">
+    <h2 class="section-title">Volunteer Experience</h2>
+    
     <div class="card">
-      <ul>
-        <li>Dean’s List — University of Gujrat (2019, 2020)</li>
+      <h3>ESOL and English Culture Hub Volunteer</h3>
+      <p style="color: #FFD700; margin-bottom: 10px; font-weight: 700;">West Bridgford Library, Nottingham | Inspire: Culture, Learning and Libraries</p>
+      <p style="color: #666; margin-bottom: 15px; font-weight: 600;">2025</p>
+      <p>As an international student, this role helps me grow communication skills while supporting others learning English. Actively engaged in meeting people from different cultures, helping with English practice, and being part of a welcoming community.</p>
+      <ul style="margin-top: 15px;">
+        <li>Support visitors with English language learning and cultural integration</li>
+        <li>Facilitate conversation practice sessions for ESOL learners</li>
+        <li>Organize books and help with daily library tasks</li>
+        <li>Create a welcoming environment that encourages learning and reading</li>
+        <li>Build cross-cultural connections and community engagement</li>
       </ul>
     </div>
-  </section>
 
-  <!-- CONTACT -->
-  <section id="contact" class="section">
-    <h2>Contact</h2>
     <div class="card">
-      <p>Email: <a href="mailto:mariamanzoordc@gmail.com">mariamanzoordc@gmail.com</a></p>
-      <p>LinkedIn: <a href="https://www.linkedin.com/in/maria-manzoor-582030331" target="_blank">www.linkedin.com/in/maria-manzoor-582030331</a></p>
+      <h3>Library Volunteer</h3>
+      <p style="color: #FFD700; margin-bottom: 10px; font-weight: 700;">West Bridgford Library, Nottingham | Inspire Community</p>
+      <p style="color: #666; margin-bottom: 15px; font-weight: 600;">2025</p>
+      <p>Contributing to a community space that encourages learning and reading while gaining valuable experience in public service and community engagement.</p>
+      <ul style="margin-top: 15px;">
+        <li>Assist library visitors with inquiries and resources</li>
+        <li>Organize and maintain book collections</li>
+        <li>Support daily library operations and activities</li>
+        <li>Participate in community events and programs</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Sisters Ramadan Volunteer</h3>
+      <p style="color: #FFD700; margin-bottom: 10px; font-weight: 700;">De Montfort University</p>
+      <p style="color: #666; margin-bottom: 15px; font-weight: 600;">2025</p>
+      <p>Recognized as one of the 2025 Sisters Ramadan Volunteers for supporting the community during the blessed month of Ramadan. A truly meaningful experience that provided a deeper sense of belonging, connection, and purpose as an international student.</p>
+      <ul style="margin-top: 15px;">
+        <li>Assisted with iftar arrangements in the DMU Prayer Room</li>
+        <li>Contributed to community activities and events during Ramadan</li>
+        <li>Fostered unity and kindness within the university community</li>
+        <li>Worked alongside dedicated volunteers to support students</li>
+      </ul>
+      <p style="margin-top: 15px; color: #FFD700; font-weight: 700;"><strong>Recognition:</strong> Certificate of Appreciation for outstanding volunteer service</p>
     </div>
   </section>
 
-  <!-- FOOTER -->
+  <!-- Education Section -->
+  <section id="education">
+    <h2 class="section-title">Education</h2>
+    
+    <div class="card">
+      <h3>MSc Software Engineering<span class="badge">First Class</span></h3>
+      <p style="color: #FFD700; margin-bottom: 10px; font-weight: 700;">De Montfort University, UK</p>
+      <p style="color: #666; font-weight: 600;">2024 - 2025</p>
+      <p style="margin-top: 15px;">Specializing in AI-driven software development, automated testing, and advanced software engineering practices. Completed comprehensive research on benchmarking AI models for code generation.</p>
+      <p style="margin-top: 10px;"><strong>Notable Achievement:</strong> The Best Postgraduate Project/Dissertation Prize in Computer Science (October 2025)</p>
+    </div>
+
+    <div class="card">
+      <h3>BSc Information Technology</h3>
+      <p style="color: #FFD700; margin-bottom: 10px; font-weight: 700;">University of Gujrat, Pakistan</p>
+      <p style="color: #666; font-weight: 600;">2016 - 2020</p>
+      <p style="margin-top: 15px;"><strong>Honors:</strong> Dean's List (2019, 2020)</p>
+    </div>
+  </section>
+
+  <!-- Awards & Certifications Section -->
+  <section id="awards">
+    <h2 class="section-title">Awards & Certifications</h2>
+    
+    <div class="awards-grid">
+      <div class="award-card">
+        <div class="award-icon">🏆</div>
+        <h3>Best Postgraduate Project/Dissertation Prize in Computer Science</h3>
+        <p class="award-org">De Montfort University</p>
+        <p style="color: #666; font-size: 0.9em; font-weight: 600;">October 2025</p>
+        <p style="margin-top: 10px; color: #333;">Awarded for outstanding research on benchmarking AI models for automated code generation and testing using HumanEval.</p>
+      </div>
+
+      <div class="award-card">
+        <div class="award-icon">📜</div>
+        <h3>Data Analysis and AI Training Program</h3>
+        <p class="award-org">Victoria Solutions</p>
+        <p style="color: #666; font-size: 0.9em; font-weight: 600;">2025</p>
+        <p style="margin-top: 10px; color: #333;">
+          <strong>Certificates Earned:</strong><br>
+          • Certificate of Module Completion<br>
+          • Certificate of Excellence<br>
+          • Certificate of Internship Completion
+        </p>
+        <p style="margin-top: 10px; color: #333;">Gained hands-on experience in Data Analysis (Excel, Power BI, Tableau), Business Analysis, and AI-driven approaches to real-world problems.</p>
+      </div>
+
+      <div class="award-card">
+        <div class="award-icon">🎓</div>
+        <h3>TIGLX - Nail Your Interview!</h3>
+        <p class="award-org">The Intern Group</p>
+        <p style="color: #92400e; font-size: 0.9em; font-weight: 600;">2025</p>
+        <p style="margin-top: 10px; color: #333;">Completed intensive learning program focusing on interview preparation and professional development skills for global workplaces.</p>
+      </div>
+
+      <div class="award-card">
+        <div class="award-icon">💻</div>
+        <h3>Display Screen Equipment (DSE) Certificate</h3>
+        <p class="award-org">Inspire: Culture, Learning and Libraries</p>
+        <p style="color: #666; font-size: 0.9em; font-weight: 600;">2025</p>
+        <p style="margin-top: 10px; color: #333;">Certified in workstation ergonomics, posture guidelines, and digital wellbeing practices essential for productive work environments.</p>
+      </div>
+
+      <div class="award-card">
+        <div class="award-icon">🤝</div>
+        <h3>Certificate of Appreciation - Ramadan Volunteer</h3>
+        <p class="award-org">De Montfort University</p>
+        <p style="color: #666; font-size: 0.9em; font-weight: 600;">2025</p>
+        <p style="margin-top: 10px; color: #333;">Recognized for outstanding volunteer service as part of the 2025 Sisters Ramadan Volunteers program.</p>
+      </div>
+
+      <div class="award-card">
+        <div class="award-icon">🌟</div>
+        <h3>Dean's List</h3>
+        <p class="award-org">University of Gujrat, Pakistan</p>
+        <p style="color: #666; font-size: 0.9em; font-weight: 600;">2019, 2020</p>
+        <p style="margin-top: 10px; color: #333;">Achieved Dean's List honors for academic excellence during undergraduate studies.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2 class="section-title">Get In Touch</h2>
+    <p style="text-align: center; color: #333; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto; font-size: 1.1em; font-weight: 600;">
+      I'm always open to discussing new opportunities, collaborations, or interesting projects. Feel free to reach out!
+    </p>
+    <div class="contact-grid">
+      <div class="contact-item">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+        </svg>
+        <h3>Email</h3>
+        <a href="mailto:mariamanzoordc@gmail.com">mariamanzoordc@gmail.com</a>
+      </div>
+      <div class="contact-item">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+        </svg>
+        <h3>LinkedIn</h3>
+        <a href="https://www.linkedin.com/in/maria-manzoor-582030331" target="_blank">Connect with me</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
   <footer>
-    <p>© 2025 Maria Manzoor. All Rights Reserved.</p>
+    <p style="font-size: 1.1em;">© 2025 Maria Manzoor. All Rights Reserved.</p>
+    <p style="margin-top: 10px; font-size: 1em;">Built with passion and attention to detail ✨</p>
   </footer>
 
+  <!-- Scroll to top button -->
+  <div class="scroll-top" id="scrollTop"></div>
+
   <script>
-    const cards = document.querySelectorAll('.card');
-    const observer = new IntersectionObserver(entries => {
+    // Intersection Observer for cards
+    const cards = document.querySelectorAll('.card, .award-card');
+    const cardObserver = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('show');
         }
       });
     }, { threshold: 0.1 });
-    cards.forEach(card => observer.observe(card));
+    
+    cards.forEach(card => cardObserver.observe(card));
+
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Scroll to top button
+    const scrollTopBtn = document.getElementById('scrollTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        scrollTopBtn.classList.add('show');
+      } else {
+        scrollTopBtn.classList.remove('show');
+      }
+    });
+
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          const offsetTop = target.offsetTop - 80;
+          window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
   </script>
 </body>
 </html>
