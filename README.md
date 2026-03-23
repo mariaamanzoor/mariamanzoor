@@ -1,1 +1,4 @@
 npx serve
+git add .
+git commit -m "Your message here"
+git push origin main

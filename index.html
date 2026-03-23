@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Maria Manzoor — CV</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --navy:       #0F1F45;
@@ -15,789 +15,818 @@
     --teal-light: #F0FDFA;
     --teal-mid:   #14B8A6;
     --gold:       #D97706;
-    --gold-light: #FFFBEB;
     --slate:      #475569;
     --light:      #F8FAFC;
+    --bg:         #F0F4F8;
     --white:      #FFFFFF;
     --border:     #E2E8F0;
   }
-
+ 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
+  html { scroll-behavior: smooth; }
+ 
   body {
     font-family: 'DM Sans', sans-serif;
-    background: #F1F5F9;
+    background: var(--bg);
     color: var(--navy);
     font-size: 13.5px;
     line-height: 1.65;
+    overflow-x: hidden;
   }
-
-  /* ── PAGE WRAPPER ── */
+ 
+  /* ── AMBIENT BG BLOBS (subtle, light) ── */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -100px; left: -100px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(37,99,235,0.07) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    animation: blobDrift1 18s ease-in-out infinite alternate;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -80px; right: -80px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(20,184,166,0.07) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    animation: blobDrift2 14s ease-in-out infinite alternate;
+  }
+  @keyframes blobDrift1 { from { transform: translate(0,0); } to { transform: translate(60px, 40px); } }
+  @keyframes blobDrift2 { from { transform: translate(0,0); } to { transform: translate(-40px, -50px); } }
+ 
+  /* ── SCROLL PROGRESS BAR ── */
+  #progressBar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+    background: linear-gradient(90deg, var(--blue), var(--teal-mid));
+    z-index: 9999;
+    box-shadow: 0 0 8px rgba(37,99,235,0.4);
+    transition: width 0.08s linear;
+  }
+ 
+  /* ── FLOATING NAV DOTS ── */
+  .nav-dots {
+    position: fixed; right: 18px; top: 50%;
+    transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 9px;
+    z-index: 200;
+  }
+  .nav-dot {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: rgba(37,99,235,0.25);
+    border: 1.5px solid rgba(37,99,235,0.35);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+    position: relative;
+  }
+  .nav-dot::before {
+    content: attr(data-label);
+    position: absolute; right: 16px; top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap; font-size: 10px; font-weight: 600;
+    color: var(--navy);
+    background: white;
+    padding: 3px 8px; border-radius: 4px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.2s;
+    border: 1px solid var(--border);
+  }
+  .nav-dot:hover::before { opacity: 1; }
+  .nav-dot:hover, .nav-dot.active {
+    background: var(--blue);
+    border-color: var(--blue);
+    transform: scale(1.4);
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+  }
+  .nav-dot.active { background: var(--teal-mid); border-color: var(--teal-mid); box-shadow: 0 0 0 3px rgba(20,184,166,0.18); }
+ 
+  /* ── PAGE ── */
   .page {
     width: 210mm;
     min-height: 297mm;
-    margin: 0 auto;
+    margin: 28px auto 50px;
     background: var(--white);
     position: relative;
     overflow: hidden;
+    box-shadow:
+      0 1px 3px rgba(0,0,0,0.04),
+      0 8px 24px rgba(15,31,69,0.08),
+      0 24px 64px rgba(15,31,69,0.06);
+    border-radius: 6px;
+    z-index: 1;
+    border: 1px solid rgba(255,255,255,0.8);
   }
-
-  /* ── DECORATIVE GEOMETRIC BG ── */
-  .page::before {
-    content: '';
-    position: absolute;
-    top: -60px; right: -60px;
-    width: 280px; height: 280px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, rgba(37,99,235,0.08), rgba(15,118,110,0.06));
-    z-index: 0;
-  }
+ 
+  /* decorative corner accent */
   .page::after {
     content: '';
     position: absolute;
-    bottom: 80px; left: -80px;
-    width: 220px; height: 220px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, rgba(15,31,69,0.05), rgba(37,99,235,0.04));
-    z-index: 0;
+    top: 0; right: 0;
+    width: 0; height: 0;
+    border-style: solid;
+    border-width: 0 32px 32px 0;
+    border-color: transparent rgba(37,99,235,0.08) transparent transparent;
+    pointer-events: none;
+    z-index: 10;
   }
-
+ 
   /* ── HEADER ── */
   .header {
-    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, #1e4080 100%);
-    padding: 36px 44px 30px;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 58%, #204a8c 100%);
+    padding: 38px 46px 32px;
     position: relative;
     overflow: hidden;
-    z-index: 1;
   }
-
-  .header::before {
-    content: '';
-    position: absolute;
-    top: -40px; right: 80px;
-    width: 200px; height: 200px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.04);
+  .header-orb {
+    position: absolute; border-radius: 50%;
+    filter: blur(50px); pointer-events: none;
   }
-  .header::after {
-    content: '';
-    position: absolute;
-    bottom: -30px; right: -30px;
-    width: 140px; height: 140px;
-    border-radius: 50%;
-    background: rgba(37,99,235,0.15);
+  .header-orb-1 { width: 220px; height: 220px; background: rgba(20,184,166,0.14); top: -70px; right: 50px; animation: orbFloat 9s ease-in-out infinite; }
+  .header-orb-2 { width: 160px; height: 160px; background: rgba(37,99,235,0.18); bottom: -50px; right: -20px; animation: orbFloat 11s ease-in-out -3s infinite; }
+  .header-orb-3 { width: 100px; height: 100px; background: rgba(20,184,166,0.09); top: 30px; left: 180px; animation: orbFloat 7s ease-in-out -5s infinite; }
+  @keyframes orbFloat {
+    0%,100% { transform: translate(0,0) scale(1); }
+    40%      { transform: translate(12px,-16px) scale(1.06); }
+    70%      { transform: translate(-8px, 10px) scale(0.94); }
   }
-
-  /* Diagonal accent stripe */
+ 
   .header-stripe {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: repeating-linear-gradient(
-      -45deg,
-      transparent,
-      transparent 30px,
-      rgba(255,255,255,0.012) 30px,
-      rgba(255,255,255,0.012) 60px
-    );
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(-45deg, transparent, transparent 28px, rgba(255,255,255,0.013) 28px, rgba(255,255,255,0.013) 56px);
     pointer-events: none;
   }
-
   .header-inner { position: relative; z-index: 2; }
-
+ 
   .name {
     font-family: 'Playfair Display', serif;
-    font-size: 40px;
-    font-weight: 900;
-    color: #fff;
-    letter-spacing: -0.5px;
-    line-height: 1.1;
+    font-size: 42px; font-weight: 900;
+    color: #fff; letter-spacing: -0.5px; line-height: 1.1;
+    opacity: 0; transform: translateY(22px);
+    animation: fadeUp 0.75s cubic-bezier(0.16,1,0.3,1) 0.1s forwards;
   }
-
   .name-accent {
     color: var(--teal-mid);
+    position: relative; display: inline-block;
+    cursor: default;
+    transition: text-shadow 0.3s;
   }
-
+  .name-accent:hover { text-shadow: 0 0 24px rgba(20,184,166,0.5); }
+  .name-accent::after {
+    content: '';
+    position: absolute; bottom: -3px; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--teal-mid), rgba(20,184,166,0.2));
+    border-radius: 2px;
+    transform: scaleX(0); transform-origin: left;
+    animation: lineGrow 0.7s cubic-bezier(0.16,1,0.3,1) 0.9s forwards;
+  }
+  @keyframes lineGrow { to { transform: scaleX(1); } }
+ 
   .title-tag {
-    display: inline-block;
-    margin-top: 8px;
+    display: inline-block; margin-top: 9px;
     background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 4px;
-    padding: 3px 12px;
-    font-size: 11px;
-    font-weight: 600;
-    color: rgba(255,255,255,0.85);
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 4px; padding: 3px 12px;
+    font-size: 10.5px; font-weight: 600;
+    color: rgba(255,255,255,0.82);
+    letter-spacing: 1.6px; text-transform: uppercase;
+    backdrop-filter: blur(8px);
+    opacity: 0; transform: translateY(12px);
+    animation: fadeUp 0.65s cubic-bezier(0.16,1,0.3,1) 0.35s forwards;
   }
-
+ 
   .header-divider {
-    width: 48px;
-    height: 3px;
+    width: 0; height: 3px;
     background: linear-gradient(90deg, var(--teal-mid), var(--blue));
-    border-radius: 2px;
-    margin: 14px 0 16px;
+    border-radius: 2px; margin: 15px 0 17px;
+    animation: growW 0.8s cubic-bezier(0.16,1,0.3,1) 0.6s forwards;
   }
-
+  @keyframes growW { to { width: 52px; } }
+ 
   .contact-row {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    align-items: center;
+    display: flex; gap: 22px; flex-wrap: wrap; align-items: center;
+    opacity: 0; animation: fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) 0.75s forwards;
   }
-
   .contact-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    color: rgba(255,255,255,0.75);
-    font-size: 12px;
-    font-weight: 400;
+    display: flex; align-items: center; gap: 6px;
+    color: rgba(255,255,255,0.72); font-size: 11.5px;
+    transition: color 0.2s; cursor: default;
   }
-
+  .contact-item:hover { color: rgba(255,255,255,1); }
   .contact-dot {
-    width: 5px; height: 5px;
-    border-radius: 50%;
-    background: var(--teal-mid);
-    flex-shrink: 0;
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--teal-mid); flex-shrink: 0;
+    animation: dotPulse 2.8s ease-in-out infinite;
   }
-
+  @keyframes dotPulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(20,184,166,0.5); }
+    50%      { box-shadow: 0 0 0 5px rgba(20,184,166,0); }
+  }
+ 
   /* ── BODY ── */
-  .body {
-    padding: 28px 44px 36px;
-    position: relative;
-    z-index: 1;
-  }
-
+  .body { padding: 28px 46px 38px; position: relative; }
+ 
   /* ── SECTION HEADER ── */
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin: 28px 0 14px;
-  }
-
-  .section-bar {
-    width: 4px;
-    height: 20px;
-    border-radius: 2px;
-    flex-shrink: 0;
-  }
-
-  .section-title {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-  }
-
+  .section-header { display: flex; align-items: center; gap: 12px; margin: 28px 0 14px; }
+  .section-bar { width: 4px; height: 20px; border-radius: 2px; flex-shrink: 0; }
+  .section-title { font-size: 9.5px; font-weight: 700; letter-spacing: 2.8px; text-transform: uppercase; }
   .section-line {
-    flex: 1;
-    height: 1px;
-    background: var(--border);
+    flex: 1; height: 1px;
+    background: linear-gradient(90deg, var(--border), transparent);
+    position: relative; overflow: visible;
   }
-
+ 
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0; transform: translateY(22px);
+    transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+ 
   /* ── SUMMARY CARD ── */
   .summary-card {
     background: var(--blue-light);
     border-left: 4px solid var(--blue);
-    border-radius: 0 8px 8px 0;
-    padding: 14px 18px;
-    font-size: 12.5px;
-    color: #1e3a5f;
-    line-height: 1.7;
+    border-radius: 0 10px 10px 0;
+    padding: 16px 20px;
+    font-size: 12.5px; color: #1e3a5f; line-height: 1.78;
+    position: relative; overflow: hidden;
+    transition: box-shadow 0.3s, transform 0.3s;
   }
-
-  /* ── SKILL GRID ── */
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
-    margin-top: 4px;
+  .summary-card:hover {
+    box-shadow: 0 6px 28px rgba(37,99,235,0.1);
+    transform: translateX(2px);
   }
-
+  .summary-card::before {
+    content: '"';
+    position: absolute; top: -8px; right: 14px;
+    font-family: 'Playfair Display', serif;
+    font-size: 88px; color: rgba(37,99,235,0.06);
+    line-height: 1; pointer-events: none;
+  }
+ 
+  /* ── SKILLS ── */
+  .skills-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; margin-top: 4px; }
   .skill-chip {
-    background: var(--light);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 11.5px;
-    font-weight: 500;
-    color: var(--navy-mid);
-    display: flex;
-    align-items: center;
-    gap: 6px;
+    background: var(--light); border: 1px solid var(--border);
+    border-radius: 7px; padding: 7px 11px;
+    font-size: 11.5px; font-weight: 500; color: var(--navy-mid);
+    display: flex; align-items: center; gap: 7px;
+    cursor: default; position: relative; overflow: hidden;
+    transition: all 0.25s cubic-bezier(0.16,1,0.3,1);
   }
-
-  .skill-chip::before {
-    content: '';
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--blue);
-    flex-shrink: 0;
+  .skill-chip .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); flex-shrink: 0; transition: transform 0.3s, background 0.3s; }
+  .skill-chip:hover {
+    border-color: rgba(37,99,235,0.3);
+    background: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(37,99,235,0.09);
+    color: var(--blue);
   }
-
-  /* ── EXPERIENCE CARD ── */
-  .card {
-    border-radius: 8px;
-    margin-bottom: 8px;
-    overflow: hidden;
-    border: 1px solid var(--border);
+  .skill-chip:hover .dot { transform: scale(1.6); background: var(--teal-mid); }
+  .skill-chip .ripple-el {
+    position: absolute; border-radius: 50%;
+    background: rgba(37,99,235,0.15);
+    transform: scale(0);
+    animation: chipRipple 0.5s ease forwards;
+    pointer-events: none;
   }
-
-  .card-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 11px 14px 6px;
-    gap: 10px;
-  }
-
-  .card-title {
-    font-size: 13px;
-    font-weight: 600;
-    line-height: 1.3;
-  }
-
-  .card-org {
-    font-size: 11.5px;
-    font-weight: 500;
-    margin-top: 2px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .card-org-dot {
-    width: 5px; height: 5px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .card-dates {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    font-weight: 500;
-    white-space: nowrap;
-    margin-top: 3px;
-    padding: 2px 8px;
-    border-radius: 20px;
-    flex-shrink: 0;
-  }
-
-  .card-body {
-    padding: 4px 14px 11px 14px;
-  }
-
-  .card-body ul {
-    list-style: none;
-    padding: 0;
-  }
-
-  .card-body ul li {
-    font-size: 12px;
-    color: #334155;
-    padding: 2px 0 2px 14px;
-    position: relative;
-    line-height: 1.6;
-  }
-
-  .card-body ul li::before {
-    content: '›';
-    position: absolute;
-    left: 0;
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 1.3;
-  }
-
-  /* BLUE — Professional Experience */
+  @keyframes chipRipple { to { transform: scale(5); opacity: 0; } }
+ 
+  /* ── CARDS ── */
+  .card { border-radius: 9px; margin-bottom: 8px; overflow: hidden; border: 1px solid var(--border); transition: all 0.3s cubic-bezier(0.16,1,0.3,1); }
+  .card:hover { box-shadow: 0 8px 32px rgba(15,31,69,0.1); transform: translateY(-2px); }
+ 
+  .card-head { display: flex; justify-content: space-between; align-items: flex-start; padding: 11px 15px 7px; gap: 10px; }
+  .card-title { font-size: 13px; font-weight: 600; line-height: 1.3; }
+  .card-org { font-size: 11.5px; font-weight: 500; margin-top: 2px; display: flex; align-items: center; gap: 5px; }
+  .card-org-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+  .card-dates { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; white-space: nowrap; margin-top: 3px; padding: 2px 9px; border-radius: 20px; flex-shrink: 0; }
+  .card-body { padding: 4px 15px 12px; }
+  .card-body ul { list-style: none; }
+  .card-body ul li { font-size: 11.5px; color: #334155; padding: 2px 0 2px 14px; position: relative; line-height: 1.62; }
+  .card-body ul li::before { content: '›'; position: absolute; left: 0; font-weight: 700; font-size: 14px; line-height: 1.3; transition: transform 0.2s, color 0.2s; }
+  .card:hover .card-body ul li::before { transform: translateX(3px); }
+ 
   .card-blue { background: var(--blue-light); }
-  .card-blue .card-head { border-bottom: 1px solid rgba(37,99,235,0.12); }
+  .card-blue .card-head { border-bottom: 1px solid rgba(37,99,235,0.1); }
   .card-blue .card-title { color: var(--navy-mid); }
   .card-blue .card-org { color: var(--blue); }
   .card-blue .card-org-dot { background: var(--blue); }
-  .card-blue .card-dates { background: rgba(37,99,235,0.1); color: var(--blue); }
+  .card-blue .card-dates { background: rgba(37,99,235,0.09); color: var(--blue); }
   .card-blue .card-body ul li::before { color: var(--blue); }
   .card-blue-bar { background: var(--blue); }
-
-  /* TEAL — Volunteering */
+ 
   .card-teal { background: var(--teal-light); }
-  .card-teal .card-head { border-bottom: 1px solid rgba(15,118,110,0.12); }
+  .card-teal .card-head { border-bottom: 1px solid rgba(15,118,110,0.1); }
   .card-teal .card-title { color: var(--teal); }
   .card-teal .card-org { color: var(--teal-mid); }
   .card-teal .card-org-dot { background: var(--teal-mid); }
-  .card-teal .card-dates { background: rgba(20,184,166,0.12); color: var(--teal); }
+  .card-teal .card-dates { background: rgba(20,184,166,0.1); color: var(--teal); }
   .card-teal .card-body ul li::before { color: var(--teal-mid); }
   .card-teal-bar { background: var(--teal-mid); }
-
-  /* NAVY — Education */
+ 
   .card-navy { background: var(--blue-light); }
-  .card-navy .card-head { border-bottom: 1px solid rgba(15,31,69,0.10); }
+  .card-navy .card-head { border-bottom: 1px solid rgba(15,31,69,0.08); }
   .card-navy .card-title { color: var(--navy); }
   .card-navy .card-org { color: var(--navy-mid); }
   .card-navy .card-org-dot { background: var(--blue); }
-  .card-navy .card-dates { background: rgba(15,31,69,0.08); color: var(--navy-mid); }
+  .card-navy .card-dates { background: rgba(15,31,69,0.07); color: var(--navy-mid); }
   .card-navy .card-body { color: var(--navy-mid); font-size: 12px; }
   .card-navy-bar { background: var(--navy); }
-
-  /* ── ACCENT CARD WRAPPER ── */
-  .card-wrap {
-    display: flex;
-    gap: 0;
-  }
-
-  .card-accent-bar {
-    width: 5px;
-    border-radius: 6px 0 0 6px;
-    flex-shrink: 0;
-  }
-
-  .card-inner {
-    flex: 1;
-    border-radius: 0 8px 8px 0;
-  }
-
-  /* ── TAGLINE ── */
-  .tagline {
-    font-style: italic;
-    font-size: 11.5px;
-    margin-bottom: 12px;
-    padding-left: 2px;
-  }
-
+ 
+  .card-wrap { display: flex; }
+  .card-accent-bar { width: 5px; border-radius: 6px 0 0 6px; flex-shrink: 0; transition: width 0.3s; }
+  .card-wrap:hover .card-accent-bar { width: 7px; }
+  .card-inner { flex: 1; border-radius: 0 9px 9px 0; }
+ 
+  .tagline { font-style: italic; font-size: 11.5px; margin-bottom: 12px; padding-left: 2px; }
+ 
   /* ── PUBLICATION CARD ── */
   .pub-card {
     background: linear-gradient(135deg, #0F1F45 0%, #1B3A6B 100%);
-    border-radius: 10px;
-    padding: 18px 20px;
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 0;
+    border-radius: 11px; padding: 20px 22px;
+    position: relative; overflow: hidden;
+    transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s;
+    box-shadow: 0 4px 24px rgba(15,31,69,0.15);
   }
-
-  .pub-card::before {
-    content: '';
-    position: absolute;
-    top: -30px; right: -30px;
-    width: 120px; height: 120px;
-    border-radius: 50%;
-    background: rgba(20,184,166,0.12);
-    pointer-events: none;
+  .pub-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 52px rgba(15,31,69,0.22), 0 0 0 1px rgba(20,184,166,0.15);
   }
-
-  .pub-card::after {
-    content: '';
-    position: absolute;
-    bottom: -20px; left: 40px;
-    width: 80px; height: 80px;
-    border-radius: 50%;
-    background: rgba(37,99,235,0.1);
-    pointer-events: none;
-  }
-
+  .pub-card::before { content: ''; position: absolute; top: -30px; right: -30px; width: 130px; height: 130px; border-radius: 50%; background: rgba(20,184,166,0.1); pointer-events: none; animation: orbFloat 7s ease-in-out infinite; }
+  .pub-card::after  { content: ''; position: absolute; bottom: -25px; left: 40px; width: 90px; height: 90px; border-radius: 50%; background: rgba(37,99,235,0.09); pointer-events: none; animation: orbFloat 9s ease-in-out -2s infinite; }
+  .pub-scan { position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.025), transparent); animation: scanMove 5s linear infinite; pointer-events: none; }
+  @keyframes scanMove { to { left: 200%; } }
+ 
   .pub-inner { position: relative; z-index: 2; }
-
   .pub-label {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    background: rgba(20,184,166,0.2);
-    border: 1px solid rgba(20,184,166,0.4);
-    border-radius: 20px;
-    padding: 2px 10px;
-    font-size: 10px;
-    font-weight: 600;
-    color: #14B8A6;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 10px;
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(20,184,166,0.18); border: 1px solid rgba(20,184,166,0.35);
+    border-radius: 20px; padding: 2px 11px;
+    font-size: 9.5px; font-weight: 700; color: #14B8A6;
+    letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 10px;
+    animation: pulseBadge 3.5s ease-in-out infinite;
   }
-
-  .pub-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 14.5px;
-    font-weight: 700;
-    color: #fff;
-    line-height: 1.4;
-    margin-bottom: 10px;
+  @keyframes pulseBadge {
+    0%,100% { box-shadow: 0 0 0 0 rgba(20,184,166,0.25); }
+    50%      { box-shadow: 0 0 0 6px rgba(20,184,166,0); }
   }
-
-  .pub-title em {
-    color: #14B8A6;
-    font-style: normal;
-  }
-
-  .pub-meta-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 12px;
-  }
-
-  .pub-meta-chip {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.14);
-    border-radius: 5px;
-    padding: 3px 9px;
-    font-size: 11px;
-    color: rgba(255,255,255,0.8);
-  }
-
-  .pub-meta-chip span {
-    width: 5px; height: 5px;
-    border-radius: 50%;
-    background: #14B8A6;
-    flex-shrink: 0;
-    display: inline-block;
-  }
-
-  .pub-desc {
-    font-size: 11.5px;
-    color: rgba(255,255,255,0.65);
-    line-height: 1.65;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    padding-top: 10px;
-    margin-top: 4px;
-  }
-
-  .pub-authors {
-    margin-top: 9px;
-    font-size: 11px;
-    color: rgba(255,255,255,0.5);
-  }
-
-  .pub-authors strong {
-    color: rgba(255,255,255,0.75);
-  }
-
-  /* ── AWARD BADGE ── */
+  .pub-title { font-family: 'Playfair Display', serif; font-size: 14.5px; font-weight: 700; color: #fff; line-height: 1.45; margin-bottom: 10px; }
+  .pub-title em { color: #14B8A6; font-style: normal; }
+  .pub-meta-row { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 12px; }
+  .pub-meta-chip { display: flex; align-items: center; gap: 5px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 5px; padding: 3px 9px; font-size: 10.5px; color: rgba(255,255,255,0.78); transition: all 0.2s; }
+  .pub-meta-chip:hover { background: rgba(255,255,255,0.13); border-color: rgba(20,184,166,0.4); color: #14B8A6; }
+  .pub-meta-chip span { width: 5px; height: 5px; border-radius: 50%; background: #14B8A6; display: inline-block; flex-shrink: 0; }
+  .pub-desc { font-size: 11px; color: rgba(255,255,255,0.62); line-height: 1.68; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px; }
+ 
+  /* ── AWARD ── */
   .award-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
+    display: inline-flex; align-items: center; gap: 6px;
     background: linear-gradient(135deg, #FEF3C7, #FDE68A);
-    border: 1px solid #F59E0B;
-    border-radius: 6px;
-    padding: 5px 10px;
-    font-size: 11px;
-    font-weight: 600;
-    color: #92400E;
-    margin-top: 6px;
+    border: 1px solid #F59E0B; border-radius: 7px;
+    padding: 5px 11px; font-size: 11px; font-weight: 600; color: #92400E;
+    margin-top: 6px; cursor: default;
+    transition: transform 0.25s, box-shadow 0.25s;
+    animation: awardShine 4s ease-in-out infinite;
   }
-
-  /* ── PRINT ── */
+  @keyframes awardShine {
+    0%,100% { box-shadow: 0 0 0 0 rgba(245,158,11,0.2); }
+    50%      { box-shadow: 0 0 14px 4px rgba(245,158,11,0.12); }
+  }
+  .award-badge:hover { transform: scale(1.04); box-shadow: 0 4px 18px rgba(245,158,11,0.28); }
+ 
+  /* ── KEYFRAMES ── */
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+ 
+  /* ── FLOATING DOTS BG (very subtle) ── */
+  .bg-dots {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+  }
+  .bg-dot {
+    position: absolute; border-radius: 50%;
+    background: radial-gradient(circle, rgba(37,99,235,0.18), transparent 70%);
+    animation: floatDot linear infinite;
+    opacity: 0;
+  }
+ 
   @media print {
     body { background: white; }
     .page { margin: 0; box-shadow: none; }
+    #progressBar, .nav-dots, .bg-dots { display: none; }
+    .reveal { opacity: 1; transform: none; }
+    body::before, body::after { display: none; }
   }
-
   @page { size: A4; margin: 0; }
 </style>
 </head>
 <body>
+ 
+<!-- floating ambient dots -->
+<div class="bg-dots" id="bgDots"></div>
+ 
+<!-- scroll progress -->
+<div id="progressBar"></div>
+ 
+<!-- nav dots -->
+<div class="nav-dots" id="navDots">
+  <div class="nav-dot active" data-label="Top" data-target="header-section"></div>
+  <div class="nav-dot" data-label="Summary" data-target="section-summary"></div>
+  <div class="nav-dot" data-label="Skills" data-target="section-skills"></div>
+  <div class="nav-dot" data-label="Research" data-target="section-research"></div>
+  <div class="nav-dot" data-label="Experience" data-target="section-experience"></div>
+  <div class="nav-dot" data-label="Volunteering" data-target="section-volunteering"></div>
+  <div class="nav-dot" data-label="Education" data-target="section-education"></div>
+</div>
+ 
 <div class="page">
-
-  <!-- ══ HEADER ══ -->
-  <div class="header">
+ 
+  <!-- HEADER -->
+  <div class="header" id="header-section">
+    <div class="header-orb header-orb-1"></div>
+    <div class="header-orb header-orb-2"></div>
+    <div class="header-orb header-orb-3"></div>
     <div class="header-stripe"></div>
     <div class="header-inner">
       <div class="name">Maria <span class="name-accent">Manzoor</span></div>
       <div class="title-tag">MSc Software Engineering · First Class Honours · STEM</div>
       <div class="header-divider"></div>
       <div class="contact-row">
-        <div class="contact-item">
-          <div class="contact-dot"></div>
-          mariamanzoordc@gmail.com
-        </div>
-        <div class="contact-item">
-          <div class="contact-dot"></div>
-          +44 7840 663791
-        </div>
-        <div class="contact-item">
-          <div class="contact-dot"></div>
-          Best Research Project Award — De Montfort University
-        </div>
+        <div class="contact-item"><div class="contact-dot"></div>mariamanzoordc@gmail.com</div>
+        <div class="contact-item"><div class="contact-dot"></div>+44 7840 663791</div>
+        <div class="contact-item"><div class="contact-dot"></div>Best Research Project Award — De Montfort University</div>
       </div>
     </div>
   </div>
-
-  <!-- ══ BODY ══ -->
+ 
   <div class="body">
-
-    <!-- SUMMARY -->
-    <div class="section-header">
-      <div class="section-bar" style="background:var(--blue)"></div>
-      <div class="section-title" style="color:var(--blue)">Professional Summary</div>
-      <div class="section-line"></div>
+ 
+    <!-- PROFESSIONAL SUMMARY -->
+    <div id="section-summary">
+      <div class="section-header reveal">
+        <div class="section-bar" style="background:var(--blue)"></div>
+        <div class="section-title" style="color:var(--blue)">Professional Summary</div>
+        <div class="section-line"></div>
+      </div>
+      <div class="summary-card reveal">
+        First Class Honours MSc Software Engineering (STEM) graduate from De Montfort University, awarded the <strong>Best Research Project Award</strong> for work on AI-driven automated code generation and software testing. Strong background in software development, full-stack web development, and end-to-end system design, supported by excellent analytical and problem-solving abilities.<br><br>
+        Completed a Software Engineer Internship at <strong>upgradeVIP</strong>, contributing to the enhancement of website functionality and design, development and testing of chatbot-based solutions, and optimisation of booking and supplier management systems through database integration and automation tools. Demonstrated ability to deliver measurable improvements in operational efficiency, data accuracy, and user experience.<br><br>
+        Experienced in evaluating AI models for correctness, maintainability, and reliability, with research presented at <strong>GCWOT 2026, Universidad de Málaga, Spain</strong>. Proven capability in developing responsive, scalable web applications, including e-commerce platforms.<br><br>
+        Seeking opportunities to apply technical expertise and research-driven insight across software engineering, full-stack website development, AI development, and quality assurance in dynamic, innovation-driven environments.
+      </div>
     </div>
-    <div class="summary-card">
-      First Class Honours MSc Software Engineering graduate (STEM) from De Montfort University, awarded the <strong>Best Research Project Award</strong> for a dissertation on AI-driven automated code generation and software testing. Experienced in software development, full-stack web development, and end-to-end system design with strong analytical and problem-solving skills. Demonstrated expertise in evaluating AI models for correctness, maintainability, and reliability, with research submitted to <strong>GCWOT'26</strong>. Proven ability to build responsive web applications including e-commerce platforms. Motivated to contribute to software engineering, AI development, and quality assurance roles.
-    </div>
-
+ 
     <!-- KEY SKILLS -->
-    <div class="section-header">
-      <div class="section-bar" style="background:var(--navy)"></div>
-      <div class="section-title" style="color:var(--navy)">Key Skills</div>
-      <div class="section-line"></div>
+    <div id="section-skills">
+      <div class="section-header reveal">
+        <div class="section-bar" style="background:var(--navy)"></div>
+        <div class="section-title" style="color:var(--navy)">Key Skills</div>
+        <div class="section-line"></div>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-chip reveal" style="transition-delay:0.04s"><span class="dot"></span>HTML · CSS · JavaScript</div>
+        <div class="skill-chip reveal" style="transition-delay:0.08s"><span class="dot"></span>React.js</div>
+        <div class="skill-chip reveal" style="transition-delay:0.12s"><span class="dot"></span>PHP</div>
+        <div class="skill-chip reveal" style="transition-delay:0.16s"><span class="dot"></span>SQL &amp; Database Management</div>
+        <div class="skill-chip reveal" style="transition-delay:0.20s"><span class="dot"></span>AI &amp; Software Testing</div>
+        <div class="skill-chip reveal" style="transition-delay:0.24s"><span class="dot"></span>E-Commerce &amp; Digital Marketing</div>
+        <div class="skill-chip reveal" style="transition-delay:0.28s"><span class="dot"></span>Data Analysis &amp; Problem Solving</div>
+        <div class="skill-chip reveal" style="transition-delay:0.32s"><span class="dot"></span>WordPress &amp; Website Management</div>
+        <div class="skill-chip reveal" style="transition-delay:0.36s"><span class="dot"></span>Project &amp; System Administration</div>
+        <div class="skill-chip reveal" style="transition-delay:0.40s"><span class="dot"></span>Cross-Cultural Communication</div>
+        <div class="skill-chip reveal" style="transition-delay:0.44s"><span class="dot"></span>Teamwork &amp; Leadership</div>
+        <div class="skill-chip reveal" style="transition-delay:0.48s"><span class="dot"></span>Research &amp; Academic Writing</div>
+      </div>
     </div>
-    <div class="skills-grid">
-      <div class="skill-chip">HTML · CSS · JavaScript</div>
-      <div class="skill-chip">React.js</div>
-      <div class="skill-chip">PHP</div>
-      <div class="skill-chip">SQL & Database Management</div>
-      <div class="skill-chip">AI & Software Testing</div>
-      <div class="skill-chip">E-Commerce & Digital Marketing</div>
-      <div class="skill-chip">Data Analysis & Problem Solving</div>
-      <div class="skill-chip">WordPress & Website Management</div>
-      <div class="skill-chip">Project & System Administration</div>
-      <div class="skill-chip">Cross-Cultural Communication</div>
-      <div class="skill-chip">Teamwork & Leadership</div>
-      <div class="skill-chip">Research & Academic Writing</div>
-    </div>
-
-    <!-- PUBLICATIONS & RESEARCH -->
-    <div class="section-header">
-      <div class="section-bar" style="background:var(--teal-mid)"></div>
-      <div class="section-title" style="color:var(--teal)">Publications & Research</div>
-      <div class="section-line"></div>
-    </div>
-
-    <div class="pub-card">
-      <div class="pub-inner">
-        <div class="pub-label">📄 Published &amp; Presented · GCWOT 2026</div>
-        <div class="pub-title">
-          Benchmarking AI Models for <em>Automated Code Generation</em> and Testing using HumanEval
-        </div>
-        <div class="pub-meta-row">
-          <div class="pub-meta-chip"><span></span>Global Conference on Wireless and Optical Technologies</div>
-          <div class="pub-meta-chip"><span></span>Universidad de Málaga, Spain</div>
-          <div class="pub-meta-chip"><span></span>11 – 13 February 2026</div>
-          <div class="pub-meta-chip"><span></span>De Montfort University</div>
-        </div>
-        <div class="pub-desc">
-          This research evaluates and benchmarks leading AI models for their effectiveness in automated code generation and software testing, using the HumanEval dataset. The study examines correctness, maintainability, and reliability of AI-generated code — contributing to the growing body of knowledge on intelligent software systems and the future of software engineering. Presented at an international conference to researchers and professionals from around the world 🌍
+ 
+    <!-- PUBLICATIONS -->
+    <div id="section-research">
+      <div class="section-header reveal">
+        <div class="section-bar" style="background:var(--teal-mid)"></div>
+        <div class="section-title" style="color:var(--teal)">Publications &amp; Research</div>
+        <div class="section-line"></div>
+      </div>
+      <div class="pub-card reveal">
+        <div class="pub-scan"></div>
+        <div class="pub-inner">
+          <div class="pub-label">📄 Published &amp; Presented · GCWOT 2026</div>
+          <div class="pub-title">Benchmarking AI Models for <em>Automated Code Generation</em> and Testing using HumanEval</div>
+          <div class="pub-meta-row">
+            <div class="pub-meta-chip"><span></span>Global Conference on Wireless &amp; Optical Technologies</div>
+            <div class="pub-meta-chip"><span></span>Universidad de Málaga, Spain</div>
+            <div class="pub-meta-chip"><span></span>11 – 13 February 2026</div>
+            <div class="pub-meta-chip"><span></span>De Montfort University</div>
+          </div>
+          <div class="pub-desc">
+            This research evaluates and benchmarks leading AI models for their effectiveness in automated code generation and software testing, using the HumanEval dataset. The study examines correctness, maintainability, and reliability of AI-generated code — contributing to the growing body of knowledge on intelligent software systems and the future of software engineering. Presented at an international conference to researchers and professionals from around the world 🌍
+          </div>
         </div>
       </div>
     </div>
-
+ 
     <!-- PROFESSIONAL EXPERIENCE -->
-    <div class="section-header">
-      <div class="section-bar" style="background:var(--blue)"></div>
-      <div class="section-title" style="color:var(--blue)">Professional Experience</div>
-      <div class="section-line"></div>
-    </div>
-
-    <!-- upgradeVIP -->
-    <div class="card-wrap">
-      <div class="card-accent-bar card-blue-bar"></div>
-      <div class="card card-blue card-inner">
-        <div class="card-head">
-          <div>
-            <div class="card-title">Software Engineer Intern</div>
-            <div class="card-org"><div class="card-org-dot"></div>upgradeVIP</div>
+    <div id="section-experience">
+      <div class="section-header reveal">
+        <div class="section-bar" style="background:var(--blue)"></div>
+        <div class="section-title" style="color:var(--blue)">Professional Experience</div>
+        <div class="section-line"></div>
+      </div>
+ 
+      <div class="card-wrap reveal" style="transition-delay:0.04s">
+        <div class="card-accent-bar card-blue-bar"></div>
+        <div class="card card-blue card-inner">
+          <div class="card-head">
+            <div><div class="card-title">Software Engineer Intern</div><div class="card-org"><div class="card-org-dot"></div>upgradeVIP</div></div>
+            <div class="card-dates">Jan 2026 – Mar 2026</div>
           </div>
-          <div class="card-dates">Jan 2026 – Mar 2026</div>
-        </div>
-        <div class="card-body">
-          <ul>
-            <li>Managed and updated website content and supported day-to-day WordPress operations.</li>
-            <li>Researched airport VIP services and validated pricing data across global locations.</li>
-            <li>Worked with databases, chatbot systems, and PDF extraction tools to support operations.</li>
-            <li>Assisted with system administration and web design tasks in an on-site internship environment.</li>
-          </ul>
+          <div class="card-body"><ul>
+            <li>Led improvements to website functionality and design using WordPress, modernizing the platform to enhance user experience and align with current industry standards.</li>
+            <li>Managed and continuously updated website content, including developing structured FAQ sections to improve customer self-service and engagement.</li>
+            <li>Designed, tested, and optimized a chatbot system, exploring automation of booking processes and ensuring reliable performance through thorough end-to-end testing.</li>
+            <li>Streamlined supplier onboarding by leveraging PDF extraction tools to automate data processing and integrate supplier information into the internal dashboard.</li>
+            <li>Maintained and updated supplier databases, including pricing validation and real-time data management across global airport VIP service providers.</li>
+            <li>Supported daily booking operations by managing backend systems and ensuring accurate, efficient handling of booking data.</li>
+            <li>Collaborated with database systems to improve data integrity, optimize workflows, and enhance overall system performance.</li>
+            <li>Conducted in-depth research on international VIP airport services to support business operations and maintain competitive, up-to-date pricing.</li>
+            <li>Contributed to system administration and technical operations within a fast-paced, on-site environment.</li>
+          </ul></div>
         </div>
       </div>
-    </div>
-
-    <!-- Aaminah's -->
-    <div class="card-wrap">
-      <div class="card-accent-bar card-blue-bar"></div>
-      <div class="card card-blue card-inner">
-        <div class="card-head">
-          <div>
-            <div class="card-title">Web Developer</div>
-            <div class="card-org"><div class="card-org-dot"></div>Aaminah's Selections</div>
+ 
+      <div class="card-wrap reveal" style="transition-delay:0.08s">
+        <div class="card-accent-bar card-blue-bar"></div>
+        <div class="card card-blue card-inner">
+          <div class="card-head">
+            <div><div class="card-title">Web Developer</div><div class="card-org"><div class="card-org-dot"></div>Aaminah's Selections</div></div>
+            <div class="card-dates">May 2025 – December 2025</div>
           </div>
-          <div class="card-dates">May 2025 – Present</div>
-        </div>
-        <div class="card-body">
-          <ul>
+          <div class="card-body"><ul>
             <li>Designed and developed a fully responsive website for a hair and skin oil company, including product listings, shopping cart functionality, and payment integration.</li>
             <li>Maintained the live site, continuously adding new features and optimising performance based on customer feedback.</li>
             <li>Managed the product database and implemented data analysis to improve user experience and conversion.</li>
-          </ul>
+          </ul></div>
         </div>
       </div>
-    </div>
-
-    <!-- Teaching Assistant -->
-    <div class="card-wrap">
-      <div class="card-accent-bar card-blue-bar"></div>
-      <div class="card card-blue card-inner">
-        <div class="card-head">
-          <div>
-            <div class="card-title">Graduate Teaching Assistant</div>
-            <div class="card-org"><div class="card-org-dot"></div>University of Gujrat</div>
+ 
+      <div class="card-wrap reveal" style="transition-delay:0.12s">
+        <div class="card-accent-bar card-blue-bar"></div>
+        <div class="card card-blue card-inner">
+          <div class="card-head">
+            <div><div class="card-title">Graduate Teaching Assistant</div><div class="card-org"><div class="card-org-dot"></div>University of Gujrat</div></div>
+            <div class="card-dates">2022 – 2024</div>
           </div>
-          <div class="card-dates">2022 – 2024</div>
-        </div>
-        <div class="card-body">
-          <ul>
+          <div class="card-body"><ul>
             <li>Assisted students with programming coursework, debugging, and troubleshooting code across multiple modules.</li>
             <li>Conducted tutorial sessions and facilitated hands-on lab exercises to reinforce theoretical concepts.</li>
             <li>Provided constructive feedback on assignments and guided students in best coding practices.</li>
             <li>Supported lecturers in preparing course materials, assessments, and study resources.</li>
             <li>Helped students understand complex software development methodologies and algorithms.</li>
-          </ul>
+          </ul></div>
         </div>
       </div>
-    </div>
-
-    <!-- Commerce People -->
-    <div class="card-wrap">
-      <div class="card-accent-bar card-blue-bar"></div>
-      <div class="card card-blue card-inner">
-        <div class="card-head">
-          <div>
-            <div class="card-title">E-commerce Specialist</div>
-            <div class="card-org"><div class="card-org-dot"></div>The Commerce People</div>
+ 
+      <div class="card-wrap reveal" style="transition-delay:0.16s">
+        <div class="card-accent-bar card-blue-bar"></div>
+        <div class="card card-blue card-inner">
+          <div class="card-head">
+            <div><div class="card-title">E-commerce Specialist</div><div class="card-org"><div class="card-org-dot"></div>The Commerce People</div></div>
+            <div class="card-dates">2021 – 2022</div>
           </div>
-          <div class="card-dates">2021 – 2022</div>
-        </div>
-        <div class="card-body">
-          <ul>
+          <div class="card-body"><ul>
             <li>Managed product listings and optimised online store performance across multiple platforms.</li>
             <li>Implemented digital marketing strategies including SEO, email campaigns, and social media outreach.</li>
             <li>Analysed sales data and customer behaviour to identify trends and improve conversion rates.</li>
             <li>Coordinated with supply chain teams to ensure timely product availability and accurate stock levels.</li>
             <li>Provided customer support and resolved enquiries efficiently to maintain high satisfaction scores.</li>
-          </ul>
+          </ul></div>
         </div>
       </div>
     </div>
-
+ 
     <!-- VOLUNTEERING -->
-    <div class="section-header">
-      <div class="section-bar" style="background:var(--teal-mid)"></div>
-      <div class="section-title" style="color:var(--teal)">Volunteering Experience</div>
-      <div class="section-line"></div>
-    </div>
-    <div class="tagline" style="color:var(--teal)">Committed to giving back through education, cultural engagement, and community inclusion.</div>
-
-    <!-- Library -->
-    <div class="card-wrap">
-      <div class="card-accent-bar card-teal-bar"></div>
-      <div class="card card-teal card-inner">
-        <div class="card-head">
-          <div>
-            <div class="card-title">Library Volunteer</div>
-            <div class="card-org"><div class="card-org-dot"></div>West Bridgford Library, Nottingham</div>
+    <div id="section-volunteering">
+      <div class="section-header reveal">
+        <div class="section-bar" style="background:var(--teal-mid)"></div>
+        <div class="section-title" style="color:var(--teal)">Volunteering Experience</div>
+        <div class="section-line"></div>
+      </div>
+      <div class="tagline reveal" style="color:var(--teal)">Committed to giving back through education, cultural engagement, and community inclusion.</div>
+ 
+      <div class="card-wrap reveal" style="transition-delay:0.04s">
+        <div class="card-accent-bar card-teal-bar"></div>
+        <div class="card card-teal card-inner">
+          <div class="card-head">
+            <div><div class="card-title">Library Volunteer</div><div class="card-org"><div class="card-org-dot"></div>West Bridgford Library, Nottingham</div></div>
+            <div class="card-dates">Dec 2025 – Jan 2026</div>
           </div>
-          <div class="card-dates">Dec 2025 – Jan 2026</div>
-        </div>
-        <div class="card-body">
-          <ul>
+          <div class="card-body"><ul>
             <li>Supported visitors by providing guidance and assistance throughout the library.</li>
             <li>Organised and managed books and resources to maintain an accessible, welcoming environment.</li>
             <li>Assisted with daily operational tasks to ensure smooth library functioning.</li>
             <li>Contributed to a community space encouraging learning, reading, and engagement.</li>
             <li>Participated in activities that added value to the library and strengthened community involvement.</li>
-          </ul>
+          </ul></div>
         </div>
       </div>
-    </div>
-
-    <!-- ESOL -->
-    <div class="card-wrap">
-      <div class="card-accent-bar card-teal-bar"></div>
-      <div class="card card-teal card-inner">
-        <div class="card-head">
-          <div>
-            <div class="card-title">ESOL & English Culture Hub Volunteer</div>
-            <div class="card-org"><div class="card-org-dot"></div>Inspire: Culture, Learning and Libraries · West Bridgford Library</div>
+ 
+      <div class="card-wrap reveal" style="transition-delay:0.08s">
+        <div class="card-accent-bar card-teal-bar"></div>
+        <div class="card card-teal card-inner">
+          <div class="card-head">
+            <div><div class="card-title">ESOL &amp; English Culture Hub Volunteer</div><div class="card-org"><div class="card-org-dot"></div>Inspire: Culture, Learning and Libraries · West Bridgford Library</div></div>
+            <div class="card-dates">Dec 2025</div>
           </div>
-          <div class="card-dates">Dec 2025</div>
-        </div>
-        <div class="card-body">
-          <ul>
+          <div class="card-body"><ul>
             <li>Supported ESOL learners by assisting with English language practice and communication activities.</li>
             <li>Engaged with individuals from diverse cultural backgrounds in a welcoming and inclusive environment.</li>
             <li>Contributed to community integration by encouraging language development and cultural exchange.</li>
             <li>Strengthened interpersonal and cross-cultural communication skills while supporting others in their learning journey.</li>
-          </ul>
+          </ul></div>
         </div>
       </div>
-    </div>
-
-    <!-- Ramadan -->
-    <div class="card-wrap">
-      <div class="card-accent-bar card-teal-bar"></div>
-      <div class="card card-teal card-inner">
-        <div class="card-head">
-          <div>
-            <div class="card-title">Ramadan Volunteer — Sisters Ramadan 2025</div>
-            <div class="card-org"><div class="card-org-dot"></div>De Montfort University, Leicester</div>
+ 
+      <div class="card-wrap reveal" style="transition-delay:0.12s">
+        <div class="card-accent-bar card-teal-bar"></div>
+        <div class="card card-teal card-inner">
+          <div class="card-head">
+            <div><div class="card-title">Ramadan Volunteer — Sisters Ramadan 2025</div><div class="card-org"><div class="card-org-dot"></div>De Montfort University, Leicester</div></div>
+            <div class="card-dates">Mar 2025</div>
           </div>
-          <div class="card-dates">Mar 2025</div>
-        </div>
-        <div class="card-body">
-          <ul>
+          <div class="card-body"><ul>
             <li>Recognised as one of the 2025 Sisters Ramadan Volunteers and awarded a Certificate of Appreciation.</li>
             <li>Supported community iftar arrangements and assisted in organising activities within the DMU Prayer Room.</li>
             <li>Contributed to creating a welcoming and inclusive environment fostering unity, kindness, and community engagement.</li>
             <li>Collaborated with fellow volunteers to ensure smooth coordination of events throughout Ramadan.</li>
             <li>Strengthened teamwork, organisational, and community leadership skills while supporting student wellbeing initiatives.</li>
-          </ul>
+          </ul></div>
         </div>
       </div>
     </div>
-
+ 
     <!-- EDUCATION -->
-    <div class="section-header">
-      <div class="section-bar" style="background:var(--navy)"></div>
-      <div class="section-title" style="color:var(--navy)">Education</div>
-      <div class="section-line"></div>
-    </div>
-
-    <!-- MSc -->
-    <div class="card-wrap">
-      <div class="card-accent-bar card-navy-bar"></div>
-      <div class="card card-navy card-inner">
-        <div class="card-head">
-          <div>
-            <div class="card-title">MSc Software Engineering — First Class Honours</div>
-            <div class="card-org"><div class="card-org-dot"></div>De Montfort University, Leicester, UK</div>
+    <div id="section-education">
+      <div class="section-header reveal">
+        <div class="section-bar" style="background:var(--navy)"></div>
+        <div class="section-title" style="color:var(--navy)">Education</div>
+        <div class="section-line"></div>
+      </div>
+ 
+      <div class="card-wrap reveal" style="transition-delay:0.04s">
+        <div class="card-accent-bar card-navy-bar"></div>
+        <div class="card card-navy card-inner">
+          <div class="card-head">
+            <div><div class="card-title">MSc Software Engineering — First Class Honours</div><div class="card-org"><div class="card-org-dot"></div>De Montfort University, Leicester, UK</div></div>
+            <div class="card-dates">2024 – 2025</div>
           </div>
-          <div class="card-dates">2024 – 2025</div>
+          <div class="card-body">
+            <div class="award-badge">🏆 Best Research Project Award &nbsp;·&nbsp; Paper presented at GCWOT 2026, Universidad de Málaga, Spain</div>
+          </div>
         </div>
-        <div class="card-body">
-          <div class="award-badge">
-            🏆 Best Research Project Award &nbsp;·&nbsp; Paper presented at GCWOT 2026, Universidad de Málaga, Spain
+      </div>
+ 
+      <div class="card-wrap reveal" style="transition-delay:0.08s">
+        <div class="card-accent-bar card-navy-bar"></div>
+        <div class="card card-navy card-inner">
+          <div class="card-head">
+            <div><div class="card-title">BSc Information Technology</div><div class="card-org"><div class="card-org-dot"></div>University of Gujrat, Pakistan</div></div>
+            <div class="card-dates">2016 – 2020</div>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- BSc -->
-    <div class="card-wrap">
-      <div class="card-accent-bar card-navy-bar"></div>
-      <div class="card card-navy card-inner">
-        <div class="card-head">
-          <div>
-            <div class="card-title">BSc Information Technology</div>
-            <div class="card-org"><div class="card-org-dot"></div>University of Gujrat, Pakistan</div>
-          </div>
-          <div class="card-dates">2016 – 2020</div>
-        </div>
-      </div>
-    </div>
-
+ 
   </div><!-- /body -->
 </div><!-- /page -->
+ 
+<script>
+// ── AMBIENT FLOATING DOTS ───────────────────────────────
+const bgDots = document.getElementById('bgDots');
+for (let i = 0; i < 18; i++) {
+  const d = document.createElement('div');
+  const size = 8 + Math.random() * 20;
+  const dur  = 12 + Math.random() * 20;
+  const delay = Math.random() * -30;
+  d.className = 'bg-dot';
+  d.style.cssText = `
+    width:${size}px; height:${size}px;
+    left:${Math.random()*100}%;
+    top:${Math.random()*100}%;
+    animation: floatDot ${dur}s ${delay}s linear infinite;
+    opacity:0;
+  `;
+  bgDots.appendChild(d);
+}
+// inject floatDot keyframe
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes floatDot {
+    0%   { opacity:0; transform: translateY(0px) scale(1); }
+    10%  { opacity:1; }
+    90%  { opacity:0.6; }
+    100% { opacity:0; transform: translateY(-120px) scale(0.6); }
+  }
+  @keyframes chipRipple { to { transform: scale(5); opacity: 0; } }
+`;
+document.head.appendChild(style);
+ 
+// ── SCROLL PROGRESS ─────────────────────────────────────
+const bar = document.getElementById('progressBar');
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  const total = document.body.scrollHeight - window.innerHeight;
+  bar.style.width = (total > 0 ? (scrolled / total) * 100 : 0) + '%';
+}, { passive: true });
+ 
+// ── SCROLL REVEAL ────────────────────────────────────────
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -20px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+ 
+// ── NAV DOTS ─────────────────────────────────────────────
+const navDots = document.querySelectorAll('.nav-dot');
+const sectionIds = ['header-section','section-summary','section-skills','section-research','section-experience','section-volunteering','section-education'];
+ 
+navDots.forEach(dot => {
+  dot.addEventListener('click', () => {
+    const el = document.getElementById(dot.dataset.target);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+ 
+const secObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const idx = sectionIds.indexOf(e.target.id);
+      if (idx >= 0) {
+        navDots.forEach(d => d.classList.remove('active'));
+        navDots[idx]?.classList.add('active');
+      }
+    }
+  });
+}, { threshold: 0.35 });
+sectionIds.forEach(id => { const el = document.getElementById(id); if (el) secObs.observe(el); });
+ 
+// ── SKILL CHIP RIPPLE ────────────────────────────────────
+document.querySelectorAll('.skill-chip').forEach(chip => {
+  chip.addEventListener('click', function(e) {
+    const r = document.createElement('span');
+    const rect = this.getBoundingClientRect();
+    const size = 30;
+    r.className = 'ripple-el';
+    r.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px;`;
+    this.appendChild(r);
+    setTimeout(() => r.remove(), 500);
+  });
+});
+ 
+// ── CARD SUBTLE TILT ─────────────────────────────────────
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('mousemove', function(e) {
+    const rect = this.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width  - 0.5) * 4;
+    const y = ((e.clientY - rect.top)  / rect.height - 0.5) * 4;
+    this.style.transform = `perspective(700px) rotateX(${-y}deg) rotateY(${x}deg) translateY(-2px)`;
+  });
+  card.addEventListener('mouseleave', function() {
+    this.style.transform = '';
+    this.style.transition = 'all 0.4s cubic-bezier(0.16,1,0.3,1)';
+  });
+});
+ 
+// ── SECTION HEADER COUNT-UP (section bar width pulse on reveal) ─
+document.querySelectorAll('.section-header.reveal').forEach(sh => {
+  const bar2 = sh.querySelector('.section-bar');
+  if (!bar2) return;
+  const obs2 = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      bar2.style.transition = 'height 0.4s cubic-bezier(0.16,1,0.3,1)';
+      bar2.style.height = '26px';
+      setTimeout(() => { bar2.style.height = '20px'; }, 400);
+      obs2.disconnect();
+    }
+  }, { threshold: 0.5 });
+  obs2.observe(sh);
+});
+ 
+// ── NAME HOVER GLOW ──────────────────────────────────────
+const nameAccent = document.querySelector('.name-accent');
+if (nameAccent) {
+  nameAccent.addEventListener('mouseenter', () => nameAccent.style.textShadow = '0 0 28px rgba(20,184,166,0.45)');
+  nameAccent.addEventListener('mouseleave', () => nameAccent.style.textShadow = '');
+}
+</script>
 </body>
 </html>
+ 
