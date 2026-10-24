@@ -1,14 +1,8 @@
 {
   "name": "Maria Portfolio",
-  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:22",
   "forwardPorts": [3000],
-  "portsAttributes": {
-    "3000": { "label": "Portfolio", "onAutoForward": "openPreview" }
-  },
+  "portsAttributes": { "3000": { "label": "Portfolio", "onAutoForward": "openPreview" } },
   "postAttachCommand": "npm start",
-  "customizations": {
-    "vscode": {
-      "extensions": ["esbenp.prettier-vscode", "ritwickdey.LiveServer"]
-    }
-  }
+  "customizations": { "vscode": { "extensions": ["esbenp.prettier-vscode"] } }
 }
