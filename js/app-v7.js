@@ -20,7 +20,7 @@
   /* ---------- tabs (hash routing) ---------- */
   var pages = $$(".page"), tabs = $$(".tabs a");
   var names = pages.map(function (p) { return p.getAttribute("data-page"); });
-  var labels = { about: "About", resume: "Resume", projects: "Projects", writing: "Writing", skills: "Skills", contact: "Contact" };
+  var labels = { about: "About", resume: "Resume", projects: "Projects", certificates: "Certificates", writing: "Writing", skills: "Skills", contact: "Contact" };
   function show(name, userAction) {
     if (names.indexOf(name) < 0) name = "about";
     pages.forEach(function (p) { p.classList.toggle("active", p.getAttribute("data-page") === name); });
@@ -73,6 +73,40 @@
     });
   });
 
+
+  /* ---------- certificates: filter + full-size viewer ---------- */
+  var cpills = $$("[data-cf]"), certs = $$(".cert"), cdlg = $("#cdlg"), cur = 0;
+  cpills.forEach(function (p) {
+    p.addEventListener("click", function () {
+      var f = p.getAttribute("data-cf");
+      cpills.forEach(function (x) { x.setAttribute("aria-pressed", String(x === p)); });
+      certs.forEach(function (c) { c.hidden = !(f === "all" || c.getAttribute("data-c") === f); });
+    });
+  });
+  function visibleCerts() { return certs.filter(function (c) { return !c.hidden; }); }
+  function showCert(i) {
+    var v = visibleCerts(); if (!v.length) return;
+    cur = (i + v.length) % v.length;
+    var c = v[cur], img = $("img", c);
+    $("#cdlg-img").src = c.getAttribute("data-full");
+    $("#cdlg-img").alt = img.alt;
+    $("#cdlg-title").textContent = $(".cert-t", c).textContent;
+    $("#cdlg-sub").textContent = $(".cert-i", c).textContent + " · " + $(".cert-d", c).textContent;
+    $("#cdlg-count").textContent = (cur + 1) + " / " + v.length;
+    $("#cdlg-open").href = c.getAttribute("data-full");
+  }
+  certs.forEach(function (c) {
+    $(".cert-btn", c).addEventListener("click", function () {
+      showCert(visibleCerts().indexOf(c)); openDialog(cdlg);
+    });
+  });
+  $("#cdlg-prev").addEventListener("click", function () { showCert(cur - 1); });
+  $("#cdlg-next").addEventListener("click", function () { showCert(cur + 1); });
+  cdlg.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowLeft") { e.preventDefault(); showCert(cur - 1); }
+    else if (e.key === "ArrowRight") { e.preventDefault(); showCert(cur + 1); }
+  });
+
   /* ---------- copy buttons ---------- */
   function copyText(t) {
     if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(t);
@@ -104,6 +138,7 @@
     { g: "Go to", i: "◉", t: "Writing & research", k: "writing articles medium isoc research paper ieee", run: function () { go("writing"); } },
     { g: "Go to", i: "◉", t: "Skills", k: "skills tools stack", run: function () { go("skills"); } },
     { g: "Go to", i: "◉", t: "Contact", k: "contact message email", run: function () { go("contact"); } },
+    { g: "Go to", i: "◉", t: "Certificates", k: "certificates certificate degree msc award prize training cpd", run: function () { go("certificates"); } },
     { g: "Actions", i: "↗", t: "Hire me on Upwork", s: "Upwork", k: "upwork freelance hire", run: function () { ext("https://www.upwork.com/freelancers/~01010d024325ed192e"); } },
     { g: "Actions", i: "↓", t: "Download CV", s: "PDF", k: "cv resume download", run: function () { closeDialog(cmd); var a = document.createElement("a"); a.href = "assets/Maria-Manzoor-CV.pdf"; a.download = "Maria-Manzoor-CV.pdf"; document.body.appendChild(a); a.click(); a.remove(); } },
     { g: "Actions", i: "✉", t: "Send an email", s: "mariamanzoordc@gmail.com", k: "email mail", run: function () { closeDialog(cmd); location.href = "mailto:mariamanzoordc@gmail.com"; } },
@@ -173,10 +208,33 @@
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(m)) { form.email.classList.add("bad"); ok = false; }
     if (!msg) { form.message.classList.add("bad"); ok = false; }
     if (!ok) { note.className = "note err"; note.textContent = "Please complete all fields with a valid email address."; return; }
-    window.location.href = "mailto:mariamanzoordc@gmail.com?subject=" + encodeURIComponent("Portfolio enquiry from " + n) + "&body=" + encodeURIComponent(msg + "\n\n" + n + " (" + m + ")");
-    note.className = "note ok";
-    note.textContent = "Opening your email app. If nothing happens, write to mariamanzoordc@gmail.com directly.";
-    form.reset();
+    if (form._honey && form._honey.value) return;
+    var btn = $("button[type=submit]", form), label = btn.textContent;
+    btn.disabled = true; btn.textContent = "Sending...";
+    note.className = "note"; note.textContent = "";
+    var fallback = function (why) {
+      try { console.warn("Contact form: AJAX send failed", why); } catch (e) {}
+      /* backup: normal form post to FormSubmit, which works from any origin */
+      note.className = "note";
+      note.textContent = "Sending with the backup method...";
+      var next = $("#next-url"); if (next) next.value = location.origin + location.pathname + "#contact";
+      var subj = form.elements["_subject"]; if (subj) subj.value = "Portfolio enquiry from " + n;
+      setTimeout(function () { HTMLFormElement.prototype.submit.call(form); }, 400);
+    };
+    fetch("https://formsubmit.co/ajax/mariamanzoordc@gmail.com", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({ name: n, email: m, message: msg, _subject: "Portfolio enquiry from " + n, _replyto: m, _template: "table", _captcha: "false" })
+    }).then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok, d: d }; }); })
+      .then(function (x) {
+        if (x.ok && String(x.d.success) !== "false") {
+          note.className = "note ok";
+          note.textContent = "Thank you, " + n.split(" ")[0] + ". Your message has been sent and I will reply by email.";
+          form.reset();
+        } else { fallback(x.d && x.d.message); }
+      })
+      .catch(fallback)
+      .then(function () { setTimeout(function () { btn.disabled = false; btn.textContent = label; }, 1500); });
   });
 
   $("#yr").textContent = new Date().getFullYear();

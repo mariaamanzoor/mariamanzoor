@@ -14,3 +14,10 @@ Then in GitHub: Settings > Pages > Source: GitHub Actions. The workflow in `.git
 
 ## Edit content
 Everything lives in `index.html`. Styles: `css/style.css`. Behaviour: `js/main.js`. Photo and CV: `assets/`.
+
+## Certificates
+Images live in `assets/certificates/`. To add one: copy the image there, then duplicate a `<li class="cert">` block in the Certificates section of `index.html` (set `data-c`, `data-full`, the image path, title, issuer and date).
+
+## Contact form
+The form sends through FormSubmit (formsubmit.co) to mariamanzoordc@gmail.com, with no server needed.
+First-time setup: after the site is live, send one test message from the form. FormSubmit emails you an activation link; click it once. After that every message arrives in your inbox. If the quick send fails, the form automatically retries with a normal form post to FormSubmit.

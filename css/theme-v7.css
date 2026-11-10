@@ -282,3 +282,148 @@ dialog#cmdk{align-self:start;margin-top:12vh;max-width:min(580px,100% - 1.5rem);
 }
 .proj .more{display:none}
 @media (max-width:1023px){.side-tools{margin-top:1rem;justify-content:flex-start}}
+
+/* ---------- certificates ---------- */
+.cgal{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:.4rem}
+.cert[hidden]{display:none}
+.cert-btn{all:unset;box-sizing:border-box;display:flex;flex-direction:column;width:100%;height:100%;cursor:pointer;background:var(--card2);border:1px solid var(--line);border-radius:18px;overflow:hidden;transition:border-color .25s,transform .3s var(--ease)}
+.cert-btn:hover{border-color:color-mix(in oklab,var(--accent) 55%,var(--line));transform:translateY(-4px)}
+.cert-btn:focus-visible{outline:2.5px solid var(--accent);outline-offset:3px}
+.cert-img{display:block;aspect-ratio:4/3;background:color-mix(in oklab,var(--card) 70%,#000);padding:.7rem;overflow:hidden}
+.cert-img img{width:100%;height:100%;object-fit:contain;border-radius:6px;box-shadow:0 8px 22px -10px rgb(0 0 0/.6);transition:transform .4s var(--ease)}
+.cert-btn:hover .cert-img img{transform:scale(1.04)}
+.cert-meta{display:flex;flex-direction:column;gap:.2rem;padding:.9rem 1rem 1.05rem}
+.cert-tag{align-self:flex-start;font-size:.64rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--accent-text);border:1px solid color-mix(in oklab,var(--accent) 45%,transparent);padding:.1rem .55rem;border-radius:999px;margin-bottom:.3rem}
+.cert-t{font-size:.9rem;line-height:1.35;font-weight:600}
+.cert-i{font-size:.78rem;color:var(--muted);line-height:1.4}
+.cert-d{font-size:.74rem;color:var(--accent-text);font-weight:500;margin-top:.15rem}
+dialog#cdlg{max-width:min(980px,100% - 1.5rem);max-height:calc(100vh - 1.5rem);overflow:hidden}
+.cv{position:relative;display:flex;flex-direction:column;max-height:calc(100vh - 1.5rem)}
+.cv .dlg-x{z-index:2;background:color-mix(in oklab,var(--card) 85%,transparent)}
+.cv-stage{flex:1;min-height:0;display:grid;place-items:center;padding:1.2rem 1.2rem .6rem;background:color-mix(in oklab,var(--card) 70%,#000);overflow:auto}
+.cv-stage img{max-width:100%;max-height:calc(100vh - 12rem);width:auto;height:auto;border-radius:8px;box-shadow:0 20px 50px -20px rgb(0 0 0/.7)}
+.cv-bar{display:flex;flex-wrap:wrap;gap:.8rem 1.2rem;align-items:center;justify-content:space-between;padding:1rem 1.3rem;border-top:1px solid var(--line)}
+.cv-info{display:flex;flex-direction:column;min-width:0;flex:1 1 260px}
+.cv-info b{font-size:.98rem;line-height:1.35}
+.cv-info span{font-size:.8rem;color:var(--muted)}
+.cv-nav{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+@media (max-width:1100px){.cgal{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.cgal{grid-template-columns:1fr}.cv-stage img{max-height:calc(100vh - 17rem)}}
+@media (max-width:1023px){.tabs{overflow-x:auto;scrollbar-width:none}.tabs ul{min-width:max-content;width:100%}}
+@media (max-width:480px){.tabs a{padding-inline:.25rem;font-size:.66rem}}
+
+/* =====================================================
+   v9 theme refresh: warmer gradients, teal secondary accent,
+   edge-to-edge certificate images
+   ===================================================== */
+:root{
+  --accent2:light-dark(#0b8f83,#5eead4);
+  --grad:linear-gradient(135deg,#ffd76e 0%,#ffa94d 55%,#ff7e5f 100%);
+  --glow:light-dark(rgb(255 169 77/.22),rgb(255 190 80/.16));
+  --glow2:light-dark(rgb(45 190 170/.16),rgb(60 200 190/.10));
+}
+body{
+  background-color:var(--bg);
+  background-image:
+    radial-gradient(900px 520px at 8% -6%,var(--glow),transparent 62%),
+    radial-gradient(820px 560px at 100% 105%,var(--glow2),transparent 60%);
+  background-attachment:fixed;
+}
+.side{background:linear-gradient(180deg,color-mix(in oklab,var(--accent) 12%,var(--card)) 0,var(--card) 220px)}
+.main{background:linear-gradient(180deg,color-mix(in oklab,var(--accent) 5%,var(--card)) 0,var(--card) 260px)}
+.avatar{padding:3px;background:var(--grad);box-shadow:0 14px 30px -14px var(--accent)}
+.avatar img{border-radius:27px}
+.title::after{width:64px;height:4px;background:var(--grad)}
+.tabs a[aria-current="page"]::after{background:var(--grad);height:3px}
+.btn-p,.pill[aria-pressed="true"],.award{background:var(--grad);border-color:transparent;color:var(--accent-ink)}
+.btn-p{box-shadow:0 12px 26px -14px #ff9a3d}
+.btn-up{box-shadow:0 12px 24px -14px var(--up)}
+.stats b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+:root[data-theme="light"] .stats b{background:linear-gradient(135deg,#c67a00,#e0531f);-webkit-background-clip:text;background-clip:text}
+.by,.cert-d,.when{color:var(--accent2) !important}
+.cico,.ico,.sub-ico{background:linear-gradient(145deg,color-mix(in oklab,var(--accent) 16%,var(--card2)),var(--card2))}
+.card2:hover,.proj:hover,.cert:hover{box-shadow:0 22px 40px -26px var(--accent)}
+.ti::before{background:var(--grad);box-shadow:0 0 0 4px var(--card),0 0 18px -2px var(--accent)}
+.chips li:hover{color:var(--accent2);border-color:var(--accent2)}
+.tags li{border-color:color-mix(in oklab,var(--accent2) 30%,var(--line))}
+.cert-tag{color:var(--accent2);border-color:color-mix(in oklab,var(--accent2) 45%,transparent)}
+.paper{background:linear-gradient(140deg,color-mix(in oklab,var(--accent) 16%,var(--card2)),color-mix(in oklab,var(--accent2) 8%,var(--card2)) 70%)}
+
+/* certificates: natural proportions, no letterbox bars */
+.cgal{display:block;columns:3;column-gap:1rem}
+.cert{break-inside:avoid;margin:0 0 1rem}
+.cert-btn{display:block;height:auto;background:var(--card2)}
+.cert-img{display:block;aspect-ratio:auto;padding:0;background:none;overflow:hidden;border-bottom:1px solid var(--line)}
+.cert-img img{display:block;width:100%;height:auto;object-fit:cover;border-radius:0;box-shadow:none}
+.cert-btn:hover .cert-img img{transform:scale(1.03)}
+.cv-stage{background:var(--card2);padding:1rem 1rem .4rem}
+.cv-stage img{box-shadow:0 18px 40px -22px rgb(0 0 0/.5);border:1px solid var(--line)}
+@media (max-width:1100px){.cgal{columns:2}}
+@media (max-width:560px){.cgal{columns:1}}
+
+/* =====================================================
+   v9b: bolder, more colourful finish
+   ===================================================== */
+:root{
+  --violet:light-dark(#6d4aff,#a78bfa);
+  --coral:light-dark(#e5484d,#ff8f7e);
+  --glass:light-dark(rgb(255 255 255/.72),rgb(26 26 29/.72));
+}
+::selection{background:var(--accent);color:var(--accent-ink)}
+body{
+  background-image:
+    radial-gradient(760px 480px at 6% -4%,var(--glow),transparent 62%),
+    radial-gradient(700px 520px at 98% 8%,color-mix(in oklab,var(--violet) 16%,transparent),transparent 62%),
+    radial-gradient(860px 560px at 90% 108%,var(--glow2),transparent 60%),
+    radial-gradient(640px 420px at 0% 100%,color-mix(in oklab,var(--coral) 12%,transparent),transparent 62%);
+}
+.side,.main{background-color:var(--glass);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
+.side{background-image:linear-gradient(180deg,color-mix(in oklab,var(--accent) 22%,transparent) 0,transparent 190px)}
+.main{background-image:linear-gradient(180deg,color-mix(in oklab,var(--violet) 8%,transparent) 0,transparent 240px)}
+
+/* hero on About */
+.hero{margin-bottom:1.4rem}
+.hello{display:inline-block;margin:0 0 .9rem;padding:.3rem .95rem;border-radius:999px;font-size:.78rem;font-weight:600;letter-spacing:.03em;color:var(--accent-text);background:var(--accent-soft);border:1px solid color-mix(in oklab,var(--accent) 40%,transparent)}
+.hero .title{font-size:clamp(1.9rem,3.4vw,2.7rem);line-height:1.15;padding-bottom:1rem;max-width:20ch;text-wrap:balance}
+.grad{background:linear-gradient(120deg,#ffc94d,#ff7e5f 55%,#b08cff);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+:root[data-theme="light"] .grad{background:linear-gradient(120deg,#d98200,#e0451f 55%,#6d4aff);-webkit-background-clip:text;background-clip:text}
+.id h1{background:linear-gradient(120deg,var(--ink) 40%,var(--accent-text));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+
+/* coloured stat tiles */
+.stats li{position:relative;overflow:hidden;border-color:transparent;background:linear-gradient(145deg,color-mix(in oklab,var(--accent) 20%,var(--card2)),var(--card2) 75%)}
+.stats li:nth-child(2){background:linear-gradient(145deg,color-mix(in oklab,var(--violet) 22%,var(--card2)),var(--card2) 75%)}
+.stats li:nth-child(3){background:linear-gradient(145deg,color-mix(in oklab,var(--accent2) 22%,var(--card2)),var(--card2) 75%)}
+
+/* different hue per icon */
+.cards2 .card2:nth-child(4n+2) .ico{color:var(--violet);background:linear-gradient(145deg,color-mix(in oklab,var(--violet) 20%,var(--card2)),var(--card2))}
+.cards2 .card2:nth-child(4n+3) .ico{color:var(--accent2);background:linear-gradient(145deg,color-mix(in oklab,var(--accent2) 20%,var(--card2)),var(--card2))}
+.cards2 .card2:nth-child(4n+4) .ico{color:var(--coral);background:linear-gradient(145deg,color-mix(in oklab,var(--coral) 20%,var(--card2)),var(--card2))}
+.card2,.proj,.cert-btn,.logos a,.stats li{background-color:var(--card2)}
+
+/* project categories get their own colour */
+.proj .ph .n{display:inline-flex;align-items:center;gap:.45rem}
+.proj .ph .n::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--accent)}
+.proj[data-c="ai"] .ph .n::before{background:var(--violet)}
+.proj[data-c="automation"] .ph .n::before{background:var(--accent2)}
+.proj[data-c="research"] .ph .n::before{background:var(--coral)}
+
+/* certificates tags per category */
+.cert[data-c="academic"] .cert-tag{color:var(--accent-text);border-color:color-mix(in oklab,var(--accent) 50%,transparent)}
+.cert[data-c="research"] .cert-tag{color:var(--violet);border-color:color-mix(in oklab,var(--violet) 50%,transparent)}
+.cert[data-c="work"] .cert-tag{color:var(--coral);border-color:color-mix(in oklab,var(--coral) 50%,transparent)}
+.cert[data-c="volunteer"] .cert-tag{color:var(--accent2);border-color:color-mix(in oklab,var(--accent2) 50%,transparent)}
+
+/* tabs: soft pill on the active one */
+.tabs a{padding-inline:.2rem}
+.tabs a[aria-current="page"]{color:var(--ink)}
+
+/* buttons: light sweep on hover */
+.btn{position:relative;overflow:hidden;isolation:isolate}
+.btn::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgb(255 255 255/.35) 50%,transparent 70%);transform:translateX(-120%);transition:transform .7s var(--ease);z-index:-1}
+.btn:hover::after{transform:translateX(120%)}
+
+/* gentle ambient motion */
+@keyframes drift{0%,100%{background-position:0 0,100% 0,100% 100%,0 100%}50%{background-position:30px 20px,calc(100% - 40px) 30px,calc(100% - 20px) calc(100% - 40px),20px calc(100% - 30px)}}
+@media (prefers-reduced-motion:no-preference){body{animation:drift 24s ease-in-out infinite}}
+@media (max-width:760px){.hero .title{font-size:1.75rem}}
+.hero{padding-top:.5rem}
