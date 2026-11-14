@@ -427,3 +427,57 @@ body{
 @media (prefers-reduced-motion:no-preference){body{animation:drift 24s ease-in-out infinite}}
 @media (max-width:760px){.hero .title{font-size:1.75rem}}
 .hero{padding-top:.5rem}
+
+/* =====================================================
+   v11: desktop keeps the v9 look; these rules only change phones/tablets
+   ===================================================== */
+body{background-repeat:no-repeat}
+.main,.page{min-width:0;max-width:100%}
+.filters{max-width:100%}
+.tabs-bar{display:none}
+.side-cta .x{display:inline}
+
+@media (max-width:1023px){
+  .tabs-top{display:none}
+  .tabs-bar{display:block;position:fixed;top:auto;left:0;right:0;bottom:0;z-index:600;margin:0;padding:.3rem .3rem calc(.3rem + env(safe-area-inset-bottom));overflow:visible;background:color-mix(in oklab,var(--card) 94%,transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:0;border-top:1px solid var(--line);border-radius:20px 20px 0 0;box-shadow:0 -12px 32px -18px rgb(0 0 0/.65)}
+  .tabs-bar ul{display:flex;flex-direction:row;justify-content:space-between;gap:.1rem;min-width:0;width:100%}
+  .tabs-bar li{flex:1 1 0;min-width:0}
+  .tabs-bar a{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.18rem;padding:.5rem .1rem .45rem;border-radius:14px;font-size:.62rem;font-weight:500;text-align:center;color:var(--muted);white-space:nowrap;transition:background .2s,color .2s}
+  .tabs-bar a svg{width:21px;height:21px;flex:none}
+  .tabs-bar a[aria-current="page"]{background:var(--accent-soft);color:var(--ink)}
+  .tabs-bar a[aria-current="page"] svg{color:var(--accent-text)}
+  .tabs-bar a[aria-current="page"]::after{content:none}
+  .tabs-bar .long{display:none}
+  .tabs-bar .short{display:inline}
+  body{padding:.8rem .8rem calc(5.2rem + env(safe-area-inset-bottom))}
+  .side{-webkit-backdrop-filter:none;backdrop-filter:none;background-color:var(--card);padding:1.1rem}
+  .side-cta{grid-template-columns:1fr 1fr;margin-top:1rem}
+  .side-cta .btn{padding:.7rem .6rem;font-size:.8rem}
+  .side-cta .x{display:none}
+  .side-tools{justify-content:flex-start;margin-top:1rem}
+  .main{-webkit-backdrop-filter:none;backdrop-filter:none;background-color:var(--card)}
+  .page{padding:1.6rem 1.15rem 1.3rem}
+  .hero .title{font-size:1.7rem}
+  .foot{padding:1rem 1.15rem}
+}
+@media (max-width:560px){
+  .side-head{gap:.9rem}
+  .avatar{width:72px;height:72px;border-radius:20px}
+  .avatar img{border-radius:17px}
+  .stats{grid-template-columns:1fr}
+  .stats li{display:flex;align-items:baseline;gap:.8rem}
+  .stats b{font-size:1.15rem;min-width:3.4rem}
+  .card2{padding:1.1rem;gap:.9rem}
+  .ico{width:44px;height:44px}
+  .filters{flex-wrap:nowrap;overflow-x:auto;margin-inline:-1.15rem;padding:0 1.15rem .3rem;scrollbar-width:none}
+  .pill{flex:none}
+  .btn{padding:.8rem 1rem}
+  .cta,.paper .cta{flex-direction:column;align-items:stretch}
+  .cta .btn,.paper .cta .btn{width:100%}
+  .rows li{gap:.4rem}
+  .title{font-size:1.5rem}
+  .sub{font-size:1.15rem}
+}
+@media (max-width:360px){.tabs-bar a{font-size:.58rem}.tabs-bar a svg{width:19px;height:19px}}
+
+body{animation:none}

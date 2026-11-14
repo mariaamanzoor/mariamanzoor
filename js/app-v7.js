@@ -28,7 +28,11 @@
       if (t.getAttribute("data-tab") === name) t.setAttribute("aria-current", "page"); else t.removeAttribute("aria-current");
     });
     document.title = (labels[name] || "About") + " | Maria Manzoor";
-    if (userAction) window.scrollTo({ top: 0, behavior: "instant" });
+    if (userAction) {
+      var small = window.matchMedia && window.matchMedia("(max-width: 1023px)").matches;
+      var top = small ? Math.max(0, $("#content").getBoundingClientRect().top + window.pageYOffset - 10) : 0;
+      window.scrollTo({ top: top, behavior: "instant" });
+    }
   }
   window.addEventListener("hashchange", function () { show(location.hash.slice(1), true); });
   show(location.hash.slice(1), false);
